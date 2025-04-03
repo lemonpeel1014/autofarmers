@@ -15,7 +15,9 @@
     "format:lib": "prettier --write ./lib",
     "format:data": "prettier --write ./data",
     "format": "run-s format:*",
-    "generate:proto": "cd ./proto && grpc_tools_node_protoc --plugin=protoc-gen-ts=../node_modules/.bin/protoc-gen-ts --proto_path=. --js_out=import_style=commonjs,binary:. --grpc_out=grpc_js,generate_package_definition:. --ts_out=service=grpc-node,mode=grpc-js:. *.proto"
+    "generate:proto": "cd ./proto && grpc_tools_node_protoc --plugin=protoc-gen-ts=../node_modules/.bin/protoc-gen-ts --proto_path=. --js_out=import_style=commonjs,binary:. --grpc_out=grpc_js,generate_package_definition:. --ts_out=service=grpc-node,mode=grpc-js:. *.proto",
+    "setup": "docker compose up -d --build",
+    "teardown": "docker compose down"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.13.2",
