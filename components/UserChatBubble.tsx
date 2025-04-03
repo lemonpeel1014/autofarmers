@@ -14,7 +14,10 @@ export default function UserChatBubble({
           {line.split(" ").map((word, j) => {
             const key = `user-message-${id}-line-${i}-word-${j}`;
             return word.startsWith("@") ? (
-              <span key={key} className="font-semibold text-blue-500 underline">
+              <span
+                key={key}
+                className="font-semibold text-secondary-foreground underline"
+              >
                 {word}
               </span>
             ) : (

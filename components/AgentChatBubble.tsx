@@ -9,6 +9,7 @@ import TransactionConfirm from "./toolCards/TransactionConfirm";
 import TransactionResult from "./toolCards/TransactionResult";
 import AgentProfile from "./AgentProfile";
 import { Agent } from "@/data/agents";
+import MyPositionTable from "./toolCards/MyPositionTable";
 
 export default function AgentChatBubble({
   id,
@@ -40,7 +41,7 @@ export default function AgentChatBubble({
   }, [agent]);
 
   return (
-    <div className="flex w-full max-w-[75%] flex-row items-start gap-4 bg-transparent">
+    <div className="flex w-full max-w-[75%] flex-row items-start gap-4 bg-transparent first:mt-5 last:mb-5">
       <AgentProfile profileImage={agent.profileImage} />
       <div className="flex w-full flex-col gap-y-1 pb-2">
         <div className="flex w-full items-center justify-between">
@@ -70,7 +71,7 @@ export default function AgentChatBubble({
           </div>
         )}
         {!working && (
-          <div className="flex w-max flex-wrap items-center justify-start gap-x-1 gap-y-0.5 rounded-lg px-3 py-2 text-sm bg-muted first:mt-5 last:mb-5">
+          <div className="flex w-max flex-wrap items-center justify-start gap-x-1 gap-y-0.5 rounded-lg px-3 py-2 text-sm bg-muted">
             {text.split("\n").map((line, i) => (
               <Fragment key={`agent-messsage-${id}-line-${i}`}>
                 {line.split(" ").map((word, j) => {
@@ -123,6 +124,9 @@ export default function AgentChatBubble({
             )}
             {metadata && toolName === "TransactionResult" && (
               <TransactionResult metadata={metadata} />
+            )}
+            {metadata && toolName === "LiquidPoolPositions" && (
+              <MyPositionTable metadata={metadata} />
             )}
           </>
         )}

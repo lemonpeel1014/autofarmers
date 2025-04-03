@@ -213,10 +213,65 @@ export const MESSAGES: Message[] = [
     metadata: {
       tx: "0x1234567890abcdef1234567890abcdef12345678",
       state: "success",
-
       poolName: "Marinade",
       amount: 100,
       tokenSymbol: "mSOL",
+    },
+  },
+  {
+    id: 15,
+    type: "user",
+    text: "@Agent Could you display my liquidity positions?",
+  },
+  {
+    id: 16,
+    type: "agent",
+    agent: AGENT_YIELDO,
+    text: "Here are your liquidity positions",
+    toolName: "LiquidPoolPositions",
+    metadata: {
+      pools: [
+        {
+          name: "TKA-TKB",
+          tokenSymbols: ["TKA", "TKB"],
+          apy: 0.05,
+          amount: 1000,
+          value: 50000,
+          reward: 0.1,
+        },
+        {
+          name: "TKC-TKD",
+          tokenSymbols: ["TKC", "TKD"],
+          apy: 0.03,
+          amount: 500,
+          value: 25000,
+          reward: 0.05,
+        },
+        {
+          name: "TKE-TKA",
+          tokenSymbols: ["TKE", "TKA"],
+          apy: 0.04,
+          amount: 300,
+          value: 15000,
+          reward: 0.02,
+        },
+        {
+          name: "TKB-TKC",
+          tokenSymbols: ["TKB", "TKC"],
+          apy: 0.06,
+          amount: 200,
+          value: 10000,
+          reward: 0.03,
+        },
+        {
+          name: "TKD-TKE",
+          tokenSymbols: ["TKD", "TKE"],
+          apy: 0.02,
+          amount: 100,
+          value: 5000,
+          reward: 0.01,
+        },
+      ],
     },
   },
 ];
