@@ -12,10 +12,15 @@ import { MESSAGES } from '@/data/messages';
 import AgentChatBubble from '@/components/AgentChatBubble';
 import { AGENT_SWAVV, AGENT_YIELDO } from '@/data/agents';
 import AgentProfile from '@/components/AgentProfile';
+import { useSearchParams } from 'next/navigation';
 
 const AGENTS = [AGENT_YIELDO, AGENT_SWAVV];
 export default function Home() {
+  const searchParams = useSearchParams();
+  const threadId = parseInt(searchParams.get('id') ?? '0');
   const [input, setInput] = useState('');
+
+  console.log('threadId ::: ', threadId);
 
   const onSubmit = useCallback(() => {
     setInput('');

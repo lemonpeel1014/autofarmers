@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Noto_Sans, Noto_Sans_Mono } from 'next/font/google';
 import './globals.css';
-import Layout from "@/components/Layout";
+import Layout from '@/components/Layout';
 
 const fonts = Noto_Sans({
   variable: '--font-geist-sans',

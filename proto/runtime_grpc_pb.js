@@ -1,6 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
+var grpc = require('@grpc/grpc-js');
 var runtime_pb = require('./runtime_pb.js');
 
 function serialize_runtime_RunRequest(arg) {
@@ -26,7 +27,7 @@ function deserialize_runtime_RunResponse(buffer_arg) {
 }
 
 
-var AgentRuntimeService = exports['runtime.AgentRuntime'] = {
+var AgentRuntimeService = exports.AgentRuntimeService = {
   run: {
     path: '/runtime.AgentRuntime/Run',
     requestStream: false,
@@ -40,3 +41,4 @@ var AgentRuntimeService = exports['runtime.AgentRuntime'] = {
   },
 };
 
+exports.AgentRuntimeClient = grpc.makeGenericClientConstructor(AgentRuntimeService, 'AgentRuntime');

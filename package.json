@@ -15,7 +15,7 @@
     "format:lib": "prettier --write ./lib",
     "format:data": "prettier --write ./data",
     "format": "run-s format:*",
-    "generate:proto": "cd ./proto && grpc_tools_node_protoc --plugin=protoc-gen-ts=../node_modules/.bin/protoc-gen-ts --proto_path=. --js_out=import_style=commonjs,binary:. --grpc_out=grpc_js,generate_package_definition:. --ts_out=service=grpc-node,mode=grpc-js:. *.proto",
+    "generate:proto": "cd ./proto && grpc_tools_node_protoc --plugin=protoc-gen-ts=../node_modules/.bin/protoc-gen-ts --proto_path=. --js_out=import_style=commonjs,binary:. --grpc_out=grpc_js:. --ts_out=service=grpc-node,mode=grpc-js:. *.proto",
     "setup": "docker compose up -d --build",
     "teardown": "docker compose down"
   },
@@ -36,7 +36,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.1.0",
-    "tw-animate-css": "^1.2.5"
+    "tw-animate-css": "^1.2.5",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -50,10 +51,11 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.6",
+    "grpc-tools": "^1.13.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "grpc-tools": "^1.13.0",
     "tailwindcss": "^4",
     "ts-protoc-gen": "^0.15.0",
     "typescript": "^5"

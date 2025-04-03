@@ -1,6 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
+var grpc = require('@grpc/grpc-js');
 var thread_pb = require('./thread_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 
@@ -115,7 +116,7 @@ function deserialize_thread_Thread(buffer_arg) {
 }
 
 
-var ThreadManagerService = exports['thread.ThreadManager'] = {
+var ThreadManagerService = exports.ThreadManagerService = {
   createThread: {
     path: '/thread.ThreadManager/CreateThread',
     requestStream: false,
@@ -173,3 +174,4 @@ var ThreadManagerService = exports['thread.ThreadManager'] = {
   },
 };
 
+exports.ThreadManagerClient = grpc.makeGenericClientConstructor(ThreadManagerService, 'ThreadManager');

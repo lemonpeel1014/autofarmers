@@ -1,6 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
+var grpc = require('@grpc/grpc-js');
 var network_pb = require('./network_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 
@@ -60,7 +61,7 @@ function deserialize_network_RegisterAgentRequest(buffer_arg) {
 }
 
 
-var AgentNetworkService = exports['network.AgentNetwork'] = {
+var AgentNetworkService = exports.AgentNetworkService = {
   getAgentRuntimeInfo: {
     path: '/network.AgentNetwork/GetAgentRuntimeInfo',
     requestStream: false,
@@ -96,3 +97,4 @@ var AgentNetworkService = exports['network.AgentNetwork'] = {
   },
 };
 
+exports.AgentNetworkClient = grpc.makeGenericClientConstructor(AgentNetworkService, 'AgentNetwork');
