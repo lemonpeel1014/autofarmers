@@ -1,5 +1,5 @@
-import { ArrowLeftRight } from "lucide-react";
-import { Badge } from "../ui/badge";
+import { ArrowLeftRight } from 'lucide-react';
+import { Badge } from '../ui/badge';
 
 export default function SwapResult({
   metadata,
@@ -28,11 +28,11 @@ export default function SwapResult({
   };
 
   return (
-    <div className="flex flex-col p-4 gap-y-4 rounded-xl border bg-card text-card-foreground shadow w-fit">
+    <div className="bg-card text-card-foreground flex w-fit flex-col gap-y-4 rounded-xl border p-4 shadow">
       <div className="flex max-w-[17rem]">
         <p className="truncate text-sm font-medium">Tx : {tx}</p>
 
-        {state !== "success" ? (
+        {state !== 'success' ? (
           <Badge>Success</Badge>
         ) : (
           <Badge variant="destructive">Fail</Badge>
@@ -40,8 +40,8 @@ export default function SwapResult({
       </div>
 
       <div className="flex gap-x-6">
-        <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
-          <div className="flex flex-col font-medium w-full">
+        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
+          <div className="flex w-full flex-col font-medium">
             <span className="text-sm">from</span>
             <span className="text-center">{fromToken.name}</span>
           </div>
@@ -49,7 +49,7 @@ export default function SwapResult({
           <span className="font-medium">
             ($
             {(fromToken.amount * fromToken.tokenPerUSD).toLocaleString(
-              "en-US",
+              'en-US',
               {
                 maximumFractionDigits: 2,
               },
@@ -60,15 +60,15 @@ export default function SwapResult({
         <div className="flex flex-col justify-center">
           <ArrowLeftRight />
         </div>
-        <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
-          <div className="flex flex-col font-medium w-full">
+        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
+          <div className="flex w-full flex-col font-medium">
             <span className="text-sm">to</span>
             <span className="text-center">{toToken.name}</span>
           </div>
           <span className="font-medium">{toToken.amount}</span>
           <span className="font-medium">
             ($
-            {(toToken.amount * toToken.tokenPerUSD).toLocaleString("en-US", {
+            {(toToken.amount * toToken.tokenPerUSD).toLocaleString('en-US', {
               maximumFractionDigits: 2,
             })}
             )
@@ -83,7 +83,7 @@ export default function SwapResult({
             <span>:</span>
           </div>
           <span>
-            {providersFee.toLocaleString("en-US", {
+            {providersFee.toLocaleString('en-US', {
               maximumFractionDigits: 3,
               minimumFractionDigits: 2,
             })}
@@ -96,7 +96,7 @@ export default function SwapResult({
             <span>:</span>
           </div>
           <span>
-            {networkFee.toLocaleString("en-US", {
+            {networkFee.toLocaleString('en-US', {
               maximumFractionDigits: 3,
               minimumFractionDigits: 2,
             })}

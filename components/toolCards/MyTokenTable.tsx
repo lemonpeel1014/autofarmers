@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 export default function MyTokenTable({
   metadata,
@@ -22,14 +22,14 @@ export default function MyTokenTable({
   }[];
 
   return (
-    <div className="rounded-xl border bg-card text-card-foreground shadow w-fit min-w-[11rem]">
+    <div className="bg-card text-card-foreground w-fit min-w-[11rem] rounded-xl border shadow">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Name
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Amount
             </TableHead>
           </TableRow>
@@ -40,7 +40,7 @@ export default function MyTokenTable({
               <TableRow key={`token-${tokens.name}-${index}`}>
                 <TableCell className="text-center">{tokens.name}</TableCell>
                 <TableCell className="text-right">
-                  {tokens.amount.toLocaleString("en-US", {
+                  {tokens.amount.toLocaleString('en-US', {
                     maximumFractionDigits: 2,
                   })}
                 </TableCell>

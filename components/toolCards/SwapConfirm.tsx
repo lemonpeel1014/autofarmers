@@ -1,5 +1,5 @@
-import { ArrowLeftRight } from "lucide-react";
-import { Button } from "../ui/button";
+import { ArrowLeftRight } from 'lucide-react';
+import { Button } from '../ui/button';
 
 export default function SwapConfirm({
   isLastMessage,
@@ -32,10 +32,10 @@ export default function SwapConfirm({
   };
 
   return (
-    <div className="flex flex-col p-4 rounded-xl border bg-card text-card-foreground shadow w-fit">
+    <div className="bg-card text-card-foreground flex w-fit flex-col rounded-xl border p-4 shadow">
       <div className="flex gap-x-6">
-        <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
-          <div className="flex flex-col font-medium w-full">
+        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
+          <div className="flex w-full flex-col font-medium">
             <span className="text-sm">from</span>
             <span className="text-center">{fromToken.name}</span>
           </div>
@@ -43,7 +43,7 @@ export default function SwapConfirm({
           <span className="font-medium">
             ($
             {(fromToken.amount * fromToken.tokenPerUSD).toLocaleString(
-              "en-US",
+              'en-US',
               {
                 maximumFractionDigits: 2,
               },
@@ -54,15 +54,15 @@ export default function SwapConfirm({
         <div className="flex flex-col justify-center">
           <ArrowLeftRight />
         </div>
-        <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
-          <div className="flex flex-col font-medium w-full">
+        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
+          <div className="flex w-full flex-col font-medium">
             <span className="text-sm">to</span>
             <span className="text-center">{toToken.name}</span>
           </div>
           <span className="font-medium">{toToken.amount}</span>
           <span className="font-medium">
             ($
-            {(toToken.amount * toToken.tokenPerUSD).toLocaleString("en-US", {
+            {(toToken.amount * toToken.tokenPerUSD).toLocaleString('en-US', {
               maximumFractionDigits: 2,
             })}
             )
@@ -70,14 +70,14 @@ export default function SwapConfirm({
         </div>
       </div>
 
-      <div className="flex flex-col my-4">
+      <div className="my-4 flex flex-col">
         <div className="grid grid-cols-2">
           <div className="flex">
             <span>Providers Fee</span>
             <span>:</span>
           </div>
           <span>
-            {providersFee.toLocaleString("en-US", {
+            {providersFee.toLocaleString('en-US', {
               maximumFractionDigits: 3,
               minimumFractionDigits: 2,
             })}
@@ -90,7 +90,7 @@ export default function SwapConfirm({
             <span>:</span>
           </div>
           <span>
-            {networkFee.toLocaleString("en-US", {
+            {networkFee.toLocaleString('en-US', {
               maximumFractionDigits: 3,
               minimumFractionDigits: 2,
             })}
@@ -99,7 +99,7 @@ export default function SwapConfirm({
         </div>
       </div>
 
-      <div className="flex gap-x-6 justify-center">
+      <div className="flex justify-center gap-x-6">
         <Button
           variant="ghost"
           disabled={!isLastMessage}

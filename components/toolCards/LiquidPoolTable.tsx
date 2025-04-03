@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 export default function LiquidPoolTable({
   metadata,
@@ -25,23 +25,23 @@ export default function LiquidPoolTable({
   }[];
 
   return (
-    <div className="rounded-xl border bg-card text-card-foreground shadow w-fit">
+    <div className="bg-card text-card-foreground w-fit rounded-xl border shadow">
       <Table>
         <TableHeader>
           <TableRow className="">
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Pool Name
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Token Symbol
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               APY(%)
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               TVL(SOL)
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Fee(%)
             </TableHead>
           </TableRow>
@@ -56,7 +56,7 @@ export default function LiquidPoolTable({
                 </TableCell>
                 <TableCell>{pool.apy}</TableCell>
                 <TableCell>
-                  {pool.tvl.toLocaleString("en-US", {
+                  {pool.tvl.toLocaleString('en-US', {
                     maximumFractionDigits: 2,
                   })}
                 </TableCell>

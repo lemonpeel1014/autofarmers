@@ -1,7 +1,7 @@
-import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
-import { Send } from "lucide-react";
-import { throttle } from "lodash-es";
+import { Textarea } from './ui/textarea';
+import { Button } from './ui/button';
+import { Send } from 'lucide-react';
+import { throttle } from 'lodash-es';
 
 export default function UserMessageInput({
   value,
@@ -17,17 +17,17 @@ export default function UserMessageInput({
       onSubmit={(event) => {
         event.preventDefault();
         if (value.length === 0) return;
-        onChange("");
+        onChange('');
       }}
       className="relative flex-1"
     >
       <Textarea
         placeholder="Give answer to your agents."
-        className="pr-12 min-h-[80px] max-h-[120px]"
+        className="max-h-[120px] min-h-[80px] pr-12"
         onChange={throttle((e) => onChange(e.target.value))}
         onKeyDown={(e) => {
           if (value.length === 0) return;
-          if (e.key !== "Enter" || !e.metaKey) return;
+          if (e.key !== 'Enter' || !e.metaKey) return;
 
           onSubmit();
         }}
@@ -36,7 +36,7 @@ export default function UserMessageInput({
       <Button
         type="submit"
         size="icon"
-        className="absolute bottom-4 right-4 h-9 w-9"
+        className="absolute right-4 bottom-4 h-9 w-9"
         disabled={value.length === 0}
       >
         <Send />

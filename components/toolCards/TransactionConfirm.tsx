@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { Button } from '../ui/button';
 
 export default function TransactionConfirm({
   isLastMessage,
@@ -19,18 +19,18 @@ export default function TransactionConfirm({
   const amount = metadata?.amount as number;
 
   return (
-    <div className="flex flex-col p-4 rounded-xl border bg-card text-card-foreground shadow w-fit">
-      <div className="flex flex-col font-medium mb-4">
+    <div className="bg-card text-card-foreground flex w-fit flex-col rounded-xl border p-4 shadow">
+      <div className="mb-4 flex flex-col font-medium">
         <span>Pool : {poolName}</span>
         <span>
-          Amount :{" "}
-          {amount.toLocaleString("en-US", {
+          Amount :&nbsp;
+          {amount.toLocaleString('en-US', {
             maximumFractionDigits: 2,
           })}
         </span>
       </div>
 
-      <div className="flex gap-x-6 justify-center">
+      <div className="flex justify-center gap-x-6">
         <Button
           variant="ghost"
           disabled={!isLastMessage}

@@ -9,7 +9,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format:app": "prettier --write ./app",
+    "format:components": "prettier --write ./components",
+    "format:lib": "prettier --write ./lib",
+    "format:data": "prettier --write ./data",
+    "format": "run-s format:*"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",
@@ -35,6 +40,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
+    "eslint-config-prettier": "^10.1.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

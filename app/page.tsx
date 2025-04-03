@@ -1,41 +1,41 @@
-"use client";
+'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
-import UserChatBubble from "@/components/UserChatBubble";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import UserMessageInput from "@/components/UserMessageInput";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { MESSAGES } from "@/data/messages";
-import AgentChatBubble from "@/components/AgentChatBubble";
-import { AGENT_SWAVV, AGENT_YIELDO } from "@/data/agents";
-import AgentProfile from "@/components/AgentProfile";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card } from '@/components/ui/card';
+import UserChatBubble from '@/components/UserChatBubble';
+import Image from 'next/image';
+import { useCallback, useState } from 'react';
+import UserMessageInput from '@/components/UserMessageInput';
+import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
+import { MESSAGES } from '@/data/messages';
+import AgentChatBubble from '@/components/AgentChatBubble';
+import { AGENT_SWAVV, AGENT_YIELDO } from '@/data/agents';
+import AgentProfile from '@/components/AgentProfile';
 
 const AGENTS = [AGENT_YIELDO, AGENT_SWAVV];
 export default function Home() {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   const onSubmit = useCallback(() => {
-    setInput("");
+    setInput('');
   }, [setInput]);
 
   const handleOnClickConfirm = useCallback((message?: string) => {
     // TODO: add confirm message
-    console.log("confirm ::: ", message);
-    setInput("");
+    console.log('confirm ::: ', message);
+    setInput('');
   }, []);
 
   const handleOnClickCancel = useCallback(() => {
     // TODO: add cancel message
-    setInput("");
+    setInput('');
   }, []);
 
   return (
     <div className="flex size-full gap-4">
       {/* Agent Section */}
-      <Card className="h-full flex flex-col justify-start w-[8.125rem] pt-10 gap-20 items-center">
+      <Card className="flex h-full w-[8.125rem] flex-col items-center justify-start gap-20 pt-10">
         <Image priority alt="Logo" src="/logo.png" width={46} height={45} />
         <div className="flex flex-col gap-4 overflow-x-auto">
           {AGENTS.map((agent, i) => {
@@ -51,21 +51,21 @@ export default function Home() {
       </Card>
 
       {/* Chat Section */}
-      <Card className="flex flex-col flex-1 max-w-[50rem] gap-0 py-0">
+      <Card className="flex max-w-[50rem] flex-1 flex-col gap-0 py-0">
         {/* Chat Header */}
-        <div className="flex flex-col border-b border-gray-200 py-5 px-8 gap-4">
+        <div className="flex flex-col gap-4 border-b border-gray-200 px-8 py-5">
           <h1 className="text-center text-2xl font-semibold">Autofarmers</h1>
-          <div className="flex gap-10 w-full overflow-x-auto">
+          <div className="flex w-full gap-10 overflow-x-auto">
             {AGENTS.map((agent, i) => {
               return (
                 <div
                   key={`agent-${i}`}
-                  className="flex flex-col gap-y-1 items-center"
+                  className="flex flex-col items-center gap-y-1"
                 >
                   <div className="relative">
                     <Avatar
-                      className={cn("z-10", {
-                        "grayscale-75": false,
+                      className={cn('z-10', {
+                        'grayscale-75': false,
                       })}
                     >
                       <AvatarImage src={agent.profileImage} />
@@ -73,7 +73,7 @@ export default function Home() {
                         <Skeleton className="size-full" />
                       </AvatarFallback>
                     </Avatar>
-                    <div className="absolute inset-0 z-0 animate-pulse rounded-full ring-3 ring-primary"></div>
+                    <div className="ring-primary absolute inset-0 z-0 animate-pulse rounded-full ring-3"></div>
                   </div>
                   <span className="animate-opacity-appear">{agent.name}</span>
                 </div>
@@ -83,11 +83,11 @@ export default function Home() {
         </div>
 
         {/* Chat Messages */}
-        <div className="flex grow flex-col gap-4 pl-6 pr-10 overflow-y-auto">
+        <div className="flex grow flex-col gap-4 overflow-y-auto pr-10 pl-6">
           {MESSAGES.map((message, i) => {
             const isLastMessage = i === MESSAGES.length - 1;
 
-            if (message.type === "agent") {
+            if (message.type === 'agent') {
               return (
                 <AgentChatBubble
                   key={`chat-agent-message-${i}`}
@@ -102,7 +102,7 @@ export default function Home() {
                 />
               );
             }
-            if (message.type === "user") {
+            if (message.type === 'user') {
               return (
                 <UserChatBubble
                   key={`chat-user-message-${i}`}

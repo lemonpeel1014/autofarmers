@@ -1,19 +1,19 @@
-import { ChevronRight } from "lucide-react";
-import { Fragment, useMemo } from "react";
-import MyTokenTable from "./toolCards/MyTokenTable";
-import SwapForm from "./toolCards/SwapForm";
-import SwapResult from "./toolCards/SwapResult";
-import LiquidPoolTable from "./toolCards/LiquidPoolTable";
-import TransactionConfirm from "./toolCards/TransactionConfirm";
-import TransactionResult from "./toolCards/TransactionResult";
-import AgentProfile from "./AgentProfile";
-import { Agent } from "@/data/agents";
-import MyPositionTable from "./toolCards/MyPositionTable";
+import { ChevronRight } from 'lucide-react';
+import { Fragment, useMemo } from 'react';
+import MyTokenTable from './toolCards/MyTokenTable';
+import SwapForm from './toolCards/SwapForm';
+import SwapResult from './toolCards/SwapResult';
+import LiquidPoolTable from './toolCards/LiquidPoolTable';
+import TransactionConfirm from './toolCards/TransactionConfirm';
+import TransactionResult from './toolCards/TransactionResult';
+import AgentProfile from './AgentProfile';
+import { Agent } from '@/data/agents';
+import MyPositionTable from './toolCards/MyPositionTable';
 
 export default function AgentChatBubble({
   id,
   agent,
-  text = "",
+  text = '',
   working = false,
   isLastMessage = false,
   toolName,
@@ -61,7 +61,7 @@ export default function AgentChatBubble({
                     className="h-2 w-2 animate-bounce rounded-full bg-gray-400"
                     style={{
                       animationDelay: `${index * 0.2}s`,
-                      animationDuration: "0.8s",
+                      animationDuration: '0.8s',
                     }}
                   />
                 ))}
@@ -70,12 +70,12 @@ export default function AgentChatBubble({
           </div>
         )}
         {!working && (
-          <div className="flex w-max flex-wrap items-center justify-start gap-x-1 gap-y-0.5 rounded-lg px-3 py-2 text-sm bg-muted">
-            {text.split("\n").map((line, i) => (
+          <div className="bg-muted flex w-max flex-wrap items-center justify-start gap-x-1 gap-y-0.5 rounded-lg px-3 py-2 text-sm">
+            {text.split('\n').map((line, i) => (
               <Fragment key={`agent-messsage-${id}-line-${i}`}>
-                {line.split(" ").map((word, j) => {
+                {line.split(' ').map((word, j) => {
                   const key = `agent-message-${id}-line-${i}-word-${j}`;
-                  return word.startsWith("@") ? (
+                  return word.startsWith('@') ? (
                     <span
                       key={key}
                       className="font-semibold text-blue-500 underline"
@@ -93,10 +93,10 @@ export default function AgentChatBubble({
         )}
         {toolName && (
           <>
-            {metadata && toolName === "TokenList" && (
+            {metadata && toolName === 'TokenList' && (
               <MyTokenTable metadata={metadata} />
             )}
-            {metadata && toolName === "SwapForm" && (
+            {metadata && toolName === 'SwapForm' && (
               <SwapForm
                 isLastMessage={isLastMessage}
                 metadata={metadata}
@@ -104,13 +104,13 @@ export default function AgentChatBubble({
                 onClickCancel={onClickCancel}
               />
             )}
-            {metadata && toolName === "SwapResult" && (
+            {metadata && toolName === 'SwapResult' && (
               <SwapResult metadata={metadata} />
             )}
-            {metadata && toolName === "LiquidPools" && (
+            {metadata && toolName === 'LiquidPools' && (
               <LiquidPoolTable metadata={metadata} />
             )}
-            {metadata && toolName === "TransactionConfirm" && (
+            {metadata && toolName === 'TransactionConfirm' && (
               <TransactionConfirm
                 isLastMessage={isLastMessage}
                 metadata={metadata}
@@ -118,10 +118,10 @@ export default function AgentChatBubble({
                 onClickCancel={onClickCancel}
               />
             )}
-            {metadata && toolName === "TransactionResult" && (
+            {metadata && toolName === 'TransactionResult' && (
               <TransactionResult metadata={metadata} />
             )}
-            {metadata && toolName === "LiquidPoolPositions" && (
+            {metadata && toolName === 'LiquidPoolPositions' && (
               <MyPositionTable metadata={metadata} />
             )}
           </>

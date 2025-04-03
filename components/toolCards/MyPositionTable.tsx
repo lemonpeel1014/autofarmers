@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 export default function MyPositionTable({
   metadata,
@@ -26,26 +26,26 @@ export default function MyPositionTable({
   }[];
 
   return (
-    <div className="rounded-xl border bg-card text-card-foreground shadow w-fit">
+    <div className="bg-card text-card-foreground w-fit rounded-xl border shadow">
       <Table>
         <TableHeader>
           <TableRow className="">
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Pool Name
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Token Symbol
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               APY(%)
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Amount
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Value($)
             </TableHead>
-            <TableHead className="text-center font-bold text-card-foreground">
+            <TableHead className="text-card-foreground text-center font-bold">
               Reward
             </TableHead>
           </TableRow>
@@ -60,12 +60,12 @@ export default function MyPositionTable({
                 </TableCell>
                 <TableCell>{pool.apy}</TableCell>
                 <TableCell>
-                  {pool.amount.toLocaleString("en-US", {
+                  {pool.amount.toLocaleString('en-US', {
                     maximumFractionDigits: 2,
                   })}
                 </TableCell>
                 <TableCell>
-                  {pool.value.toLocaleString("en-US", {
+                  {pool.value.toLocaleString('en-US', {
                     maximumFractionDigits: 2,
                     minimumFractionDigits: 2,
                   })}

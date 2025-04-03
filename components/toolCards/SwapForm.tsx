@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { ArrowLeftRight } from "lucide-react";
-import { Input } from "../ui/input";
-import { useCallback, useMemo, useState } from "react";
-import { Button } from "../ui/button";
+import { ArrowLeftRight } from 'lucide-react';
+import { Input } from '../ui/input';
+import { useCallback, useMemo, useState } from 'react';
+import { Button } from '../ui/button';
 
 const MAX_AMOUNT = 9999;
 export default function SwapForm({
@@ -49,15 +49,15 @@ export default function SwapForm({
   }, [convertedAmount, fromToken.name, onClickConfirm, toToken.name]);
 
   return (
-    <div className="flex flex-col p-4 rounded-xl border bg-card text-card-foreground shadow w-fit">
+    <div className="bg-card text-card-foreground flex w-fit flex-col rounded-xl border p-4 shadow">
       <div className="flex gap-x-6">
-        <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
-          <div className="flex flex-col font-medium w-full">
+        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
+          <div className="flex w-full flex-col font-medium">
             <span className="text-sm">from</span>
             <span className="text-center">{fromToken.name}</span>
           </div>
           <Input
-            className=" text-center"
+            className="text-center"
             disabled={!isLastMessage}
             type="number"
             min={0}
@@ -80,7 +80,7 @@ export default function SwapForm({
           />
           <span className="font-medium">
             ($
-            {(amount * fromToken.tokenPerUSD).toLocaleString("en-US", {
+            {(amount * fromToken.tokenPerUSD).toLocaleString('en-US', {
               maximumFractionDigits: 2,
             })}
             )
@@ -89,15 +89,15 @@ export default function SwapForm({
         <div className="flex flex-col justify-center">
           <ArrowLeftRight />
         </div>
-        <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
-          <div className="flex flex-col font-medium w-full">
+        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
+          <div className="flex w-full flex-col font-medium">
             <span className="text-sm">to</span>
             <span className="text-center">{toToken.name}</span>
           </div>
           <Input readOnly className="text-center" value={convertedAmount} />
           <span className="font-medium">
             ($
-            {(convertedAmount * toToken.tokenPerUSD).toLocaleString("en-US", {
+            {(convertedAmount * toToken.tokenPerUSD).toLocaleString('en-US', {
               maximumFractionDigits: 2,
             })}
             )
@@ -105,14 +105,14 @@ export default function SwapForm({
         </div>
       </div>
 
-      <div className="flex flex-col my-4">
+      <div className="my-4 flex flex-col">
         <div className="grid grid-cols-2">
           <div className="flex">
             <span>Providers Fee</span>
             <span>:</span>
           </div>
           <span>
-            {(providersFee * convertedAmount).toLocaleString("en-US", {
+            {(providersFee * convertedAmount).toLocaleString('en-US', {
               maximumFractionDigits: 3,
               minimumFractionDigits: 2,
             })}
@@ -125,7 +125,7 @@ export default function SwapForm({
             <span>:</span>
           </div>
           <span>
-            {networkFee.toLocaleString("en-US", {
+            {networkFee.toLocaleString('en-US', {
               maximumFractionDigits: 3,
               minimumFractionDigits: 2,
             })}
@@ -134,7 +134,7 @@ export default function SwapForm({
         </div>
       </div>
 
-      <div className="flex gap-x-6 justify-center">
+      <div className="flex justify-center gap-x-6">
         <Button
           variant="ghost"
           disabled={!isLastMessage}
