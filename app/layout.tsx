@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Noto_Sans, Noto_Sans_Mono } from 'next/font/google';
 import './globals.css';
+import Layout from "@/components/Layout";
 
 const fonts = Noto_Sans({
   variable: '--font-geist-sans',
@@ -59,7 +60,9 @@ export default function RootLayout({
       <body
         className={`${fonts.variable} ${fontsMono.variable} h-dvh min-h-dvh antialiased`}
       >
-        <div className="h-full">{children}</div>
+        <Layout>
+          <div className="h-full">{children}</div>
+        </Layout>
       </body>
     </html>
   );
