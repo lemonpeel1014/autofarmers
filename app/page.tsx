@@ -21,6 +21,17 @@ export default function Home() {
     setInput("");
   }, [setInput]);
 
+  const handleOnClickConfirm = useCallback((message?: string) => {
+    // TODO: add confirm message
+    console.log("confirm ::: ", message);
+    setInput("");
+  }, []);
+
+  const handleOnClickCancel = useCallback(() => {
+    // TODO: add cancel message
+    setInput("");
+  }, []);
+
   return (
     <div className="flex size-full gap-4">
       {/* Agent Section */}
@@ -74,6 +85,8 @@ export default function Home() {
         {/* Chat Messages */}
         <div className="flex grow flex-col gap-4 pl-6 pr-10 overflow-y-auto">
           {MESSAGES.map((message, i) => {
+            const isLastMessage = i === MESSAGES.length - 1;
+
             if (message.type === "agent") {
               return (
                 <AgentChatBubble
@@ -81,8 +94,11 @@ export default function Home() {
                   id={message.id}
                   agent={message.agent ?? AGENT_YIELDO}
                   text={message.text}
+                  isLastMessage={isLastMessage}
                   toolName={message.toolName}
                   metadata={message.metadata}
+                  onClickConfirm={handleOnClickConfirm}
+                  onClickCancel={handleOnClickCancel}
                 />
               );
             }

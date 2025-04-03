@@ -55,7 +55,11 @@ export default function LiquidPoolTable({
                   {pool.tokenSymbols[0]}-{pool.tokenSymbols[1]}
                 </TableCell>
                 <TableCell>{pool.apy}</TableCell>
-                <TableCell>{pool.tvl}</TableCell>
+                <TableCell>
+                  {pool.tvl.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                  })}
+                </TableCell>
                 <TableCell>{pool.fee.toFixed(2)}</TableCell>
               </TableRow>
             );

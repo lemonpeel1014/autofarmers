@@ -15,12 +15,16 @@ export default function AgentChatBubble({
   agent,
   text = "",
   working = false,
+  isLastMessage = false,
   toolName,
   metadata,
+  onClickConfirm,
+  onClickCancel,
 }: {
   id: number;
   agent: Agent;
   text?: string;
+  isLastMessage?: boolean;
   working?: boolean;
   toolName?: string;
   metadata?:
@@ -28,6 +32,8 @@ export default function AgentChatBubble({
         [key: string]: unknown;
       }
     | undefined;
+  onClickConfirm: (message?: string) => void;
+  onClickCancel: () => void;
 }) {
   const title = useMemo(() => {
     return `${agent.name} - ${agent.role}`;
@@ -91,10 +97,15 @@ export default function AgentChatBubble({
               <MyTokenTable metadata={metadata} />
             )}
             {metadata && toolName === "SwapForm" && (
-              <SwapForm metadata={metadata} />
+              <SwapForm isLastMessage={isLastMessage} metadata={metadata} />
             )}
             {metadata && toolName === "SwapConfirm" && (
-              <SwapConfirm metadata={metadata} />
+              <SwapConfirm
+                isLastMessage={isLastMessage}
+                metadata={metadata}
+                onClickConfirm={onClickConfirm}
+                onClickCancel={onClickCancel}
+              />
             )}
             {metadata && toolName === "SwapResult" && (
               <SwapResult metadata={metadata} />
@@ -103,7 +114,12 @@ export default function AgentChatBubble({
               <LiquidPoolTable metadata={metadata} />
             )}
             {metadata && toolName === "TransactionConfirm" && (
-              <TransactionConfirm metadata={metadata} />
+              <TransactionConfirm
+                isLastMessage={isLastMessage}
+                metadata={metadata}
+                onClickConfirm={onClickConfirm}
+                onClickCancel={onClickCancel}
+              />
             )}
             {metadata && toolName === "TransactionResult" && (
               <TransactionResult metadata={metadata} />

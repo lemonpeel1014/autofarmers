@@ -30,7 +30,7 @@ export default function SwapResult({
   return (
     <div className="flex flex-col p-4 gap-y-4 rounded-xl border bg-card text-card-foreground shadow w-fit">
       <div className="flex max-w-[17rem]">
-        <p className="truncate">TX : {tx}</p>
+        <p className="truncate text-sm font-medium">Tx : {tx}</p>
 
         {state !== "success" ? (
           <Badge>Success</Badge>
@@ -40,27 +40,38 @@ export default function SwapResult({
       </div>
 
       <div className="flex gap-x-6">
-        <div className="flex flex-col items-center gap-y-2 w-[6.25rem]">
+        <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
           <div className="flex flex-col font-medium w-full">
             <span className="text-sm">from</span>
             <span className="text-center">{fromToken.name}</span>
           </div>
           <span className="font-medium">{fromToken.amount}</span>
           <span className="font-medium">
-            (${fromToken.tokenPerUSD.toFixed(2)})
+            ($
+            {(fromToken.amount * fromToken.tokenPerUSD).toLocaleString(
+              "en-US",
+              {
+                maximumFractionDigits: 2,
+              },
+            )}
+            )
           </span>
         </div>
         <div className="flex flex-col justify-center">
           <ArrowLeftRight />
         </div>
-        <div className="flex flex-col items-center gap-y-2 w-[6.25rem]">
+        <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
           <div className="flex flex-col font-medium w-full">
             <span className="text-sm">to</span>
             <span className="text-center">{toToken.name}</span>
           </div>
           <span className="font-medium">{toToken.amount}</span>
           <span className="font-medium">
-            (${toToken.tokenPerUSD.toFixed(2)})
+            ($
+            {(toToken.amount * toToken.tokenPerUSD).toLocaleString("en-US", {
+              maximumFractionDigits: 2,
+            })}
+            )
           </span>
         </div>
       </div>
@@ -72,7 +83,10 @@ export default function SwapResult({
             <span>:</span>
           </div>
           <span>
-            {providersFee}
+            {providersFee.toLocaleString("en-US", {
+              maximumFractionDigits: 3,
+              minimumFractionDigits: 2,
+            })}
             {feeUnit}
           </span>
         </div>
@@ -82,7 +96,10 @@ export default function SwapResult({
             <span>:</span>
           </div>
           <span>
-            {networkFee}
+            {networkFee.toLocaleString("en-US", {
+              maximumFractionDigits: 3,
+              minimumFractionDigits: 2,
+            })}
             {feeUnit}
           </span>
         </div>

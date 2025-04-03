@@ -62,6 +62,7 @@ export const MESSAGES: Message[] = [
     metadata: {
       fromToken: {
         name: "TKA",
+        amount: 0,
         tokenPerUSD: 0.04,
       },
       toToken: {

@@ -16,9 +16,9 @@ export default function TransactionResult({
 
   return (
     <div className="flex flex-col p-4 rounded-xl border bg-card text-card-foreground shadow w-fit">
-      <div className="flex flex-col gap-y-3">
+      <div className="flex flex-col">
         <div className="flex max-w-[17rem]">
-          <p className="truncate">TX : {tx}</p>
+          <p className="truncate text-sm font-medium">Tx : {tx}</p>
 
           {state !== "success" ? (
             <Badge>Success</Badge>
@@ -26,13 +26,13 @@ export default function TransactionResult({
             <Badge variant="destructive">Fail</Badge>
           )}
         </div>
-
-        <div>
-          <span>Pool : {poolName}</span>
-        </div>
-        <div>
-          <span>Amount : {amount}</span>
-        </div>
+        <span className="font-medium">Pool :&nbsp;{poolName}</span>
+        <span className="font-medium">
+          Amount :&nbsp;
+          {amount.toLocaleString("en-US", {
+            maximumFractionDigits: 2,
+          })}
+        </span>
       </div>
     </div>
   );

@@ -39,7 +39,11 @@ export default function MyTokenTable({
             return (
               <TableRow key={`token-${tokens.name}-${index}`}>
                 <TableCell className="text-center">{tokens.name}</TableCell>
-                <TableCell className="text-right">{tokens.amount}</TableCell>
+                <TableCell className="text-right">
+                  {tokens.amount.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                  })}
+                </TableCell>
               </TableRow>
             );
           })}

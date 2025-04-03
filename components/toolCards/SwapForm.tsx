@@ -6,8 +6,10 @@ import { useMemo, useState } from "react";
 
 const MAX_AMOUNT = 9999;
 export default function SwapForm({
+  isLastMessage,
   metadata,
 }: {
+  isLastMessage: boolean;
   metadata:
     | {
         [key: string]: unknown;
@@ -16,6 +18,7 @@ export default function SwapForm({
 }) {
   const fromToken = metadata?.fromToken as {
     name: string;
+    amount?: number;
     tokenPerUSD: number;
   };
   const toToken = metadata?.toToken as {
@@ -23,7 +26,7 @@ export default function SwapForm({
     tokenPerUSD: number;
   };
 
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(fromToken.amount ?? 0);
 
   const convertedAmount = useMemo(() => {
     return (amount * fromToken.tokenPerUSD) / toToken.tokenPerUSD;
@@ -31,13 +34,14 @@ export default function SwapForm({
 
   return (
     <div className="flex gap-x-6 p-4 rounded-xl border bg-card text-card-foreground shadow w-fit">
-      <div className="flex flex-col items-center gap-y-2 w-[6.25rem]">
+      <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
         <div className="flex flex-col font-medium w-full">
           <span className="text-sm">from</span>
           <span className="text-center">{fromToken.name}</span>
         </div>
         <Input
           className=" text-center"
+          disabled={!isLastMessage}
           type="number"
           min={0}
           max={MAX_AMOUNT}
@@ -57,18 +61,30 @@ export default function SwapForm({
             return setAmount(parseFloat(e.target.value));
           }}
         />
-        <span className="font-medium">(${fromToken.tokenPerUSD.toFixed(2)})</span>
+        <span className="font-medium">
+          ($
+          {(amount * fromToken.tokenPerUSD).toLocaleString("en-US", {
+            maximumFractionDigits: 2,
+          })}
+          )
+        </span>
       </div>
       <div className="flex flex-col justify-center">
         <ArrowLeftRight />
       </div>
-      <div className="flex flex-col items-center gap-y-2 w-[6.25rem]">
+      <div className="flex flex-col items-center gap-y-2 flex-1 min-w-[6.25rem]">
         <div className="flex flex-col font-medium w-full">
           <span className="text-sm">to</span>
           <span className="text-center">{toToken.name}</span>
         </div>
         <Input readOnly className="text-center" value={convertedAmount} />
-        <span className="font-medium">(${toToken.tokenPerUSD.toFixed(2)})</span>
+        <span className="font-medium">
+          ($
+          {(convertedAmount * toToken.tokenPerUSD).toLocaleString("en-US", {
+            maximumFractionDigits: 2,
+          })}
+          )
+        </span>
       </div>
     </div>
   );

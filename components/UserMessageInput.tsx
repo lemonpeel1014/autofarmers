@@ -22,7 +22,7 @@ export default function UserMessageInput({
       className="relative flex-1"
     >
       <Textarea
-        placeholder="Type your message..."
+        placeholder="Give answer to your agents."
         className="pr-12 min-h-[80px] max-h-[120px]"
         onChange={throttle((e) => onChange(e.target.value))}
         onKeyDown={(e) => {
