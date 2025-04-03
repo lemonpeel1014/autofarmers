@@ -2,7 +2,6 @@ import { ChevronRight } from "lucide-react";
 import { Fragment, useMemo } from "react";
 import MyTokenTable from "./toolCards/MyTokenTable";
 import SwapForm from "./toolCards/SwapForm";
-import SwapConfirm from "./toolCards/SwapConfirm";
 import SwapResult from "./toolCards/SwapResult";
 import LiquidPoolTable from "./toolCards/LiquidPoolTable";
 import TransactionConfirm from "./toolCards/TransactionConfirm";
@@ -98,10 +97,7 @@ export default function AgentChatBubble({
               <MyTokenTable metadata={metadata} />
             )}
             {metadata && toolName === "SwapForm" && (
-              <SwapForm isLastMessage={isLastMessage} metadata={metadata} />
-            )}
-            {metadata && toolName === "SwapConfirm" && (
-              <SwapConfirm
+              <SwapForm
                 isLastMessage={isLastMessage}
                 metadata={metadata}
                 onClickConfirm={onClickConfirm}

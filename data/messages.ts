@@ -60,6 +60,10 @@ export const MESSAGES: Message[] = [
     text: "Here is the swap transaction form",
     toolName: "SwapForm",
     metadata: {
+      feeUnit: "USD",
+      providersFee: 0.001,
+      networkFee: 0.123,
+
       fromToken: {
         name: "TKA",
         amount: 0,
@@ -74,17 +78,20 @@ export const MESSAGES: Message[] = [
   {
     id: 5,
     type: "user",
-    text: "@Agent I want to swap 0.0392 TKA to TKB",
+    text: "@Agent I want to swap 100 TKA to TKB",
   },
   {
     id: 6,
     type: "agent",
     agent: AGENT_SWAVV,
-    text: "Please confirm the swap transaction",
-    toolName: "SwapConfirm",
+    text: "Swap transaction successfully submitted",
+    toolName: "SwapResult",
     metadata: {
+      tx: "0x1234567890abcdef1234567890abcdef12345678",
+      state: "success",
+
       feeUnit: "USD",
-      providersFee: 0.0,
+      providersFee: 0.001,
       networkFee: 0.123,
 
       fromToken: {
@@ -102,42 +109,10 @@ export const MESSAGES: Message[] = [
   {
     id: 7,
     type: "user",
-    text: "@Agent confirm",
-  },
-  {
-    id: 8,
-    type: "agent",
-    agent: AGENT_SWAVV,
-    text: "Swap transaction successfully submitted",
-    toolName: "SwapResult",
-
-    metadata: {
-      tx: "0x1234567890abcdef1234567890abcdef12345678",
-      state: "success",
-
-      feeUnit: "USD",
-      providersFee: 0.0,
-      networkFee: 0.123,
-
-      fromToken: {
-        name: "TKA",
-        amount: 100,
-        tokenPerUSD: 0.04,
-      },
-      toToken: {
-        name: "TKB",
-        amount: 200,
-        tokenPerUSD: 0.0292,
-      },
-    },
-  },
-  {
-    id: 9,
-    type: "user",
     text: "@Agent show me the Liquid Pool",
   },
   {
-    id: 10,
+    id: 8,
     type: "agent",
     agent: AGENT_YIELDO,
     text: "Here is the Liquid Pool information",
@@ -183,12 +158,12 @@ export const MESSAGES: Message[] = [
     },
   },
   {
-    id: 11,
+    id: 9,
     type: "user",
     text: "@Agent i want to sign Marinade pool transaction",
   },
   {
-    id: 12,
+    id: 10,
     type: "agent",
     agent: AGENT_YIELDO,
     text: "Here is the Marinade pool information",
@@ -200,12 +175,12 @@ export const MESSAGES: Message[] = [
     },
   },
   {
-    id: 13,
+    id: 11,
     type: "user",
     text: "@Agent confirm",
   },
   {
-    id: 14,
+    id: 12,
     type: "agent",
     agent: AGENT_YIELDO,
     text: "Marinade pool transaction successfully submitted",
@@ -219,12 +194,12 @@ export const MESSAGES: Message[] = [
     },
   },
   {
-    id: 15,
+    id: 13,
     type: "user",
     text: "@Agent Could you display my liquidity positions?",
   },
   {
-    id: 16,
+    id: 14,
     type: "agent",
     agent: AGENT_YIELDO,
     text: "Here are your liquidity positions",
