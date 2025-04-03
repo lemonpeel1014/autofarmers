@@ -12,9 +12,41 @@ const fontsMono = Noto_Sans_Mono({
   subsets: ["latin"],
 });
 
+const TITLE = "Autofarmers";
+const DESCRIPTION =
+  "DeFi assistant platform with AI agents for cryptocurrency swaps, yield farming, and liquidity pool management through an interactive chat interface.";
+const OG_IMAGE_URL = "/thumbnail.png";
+const OG_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://autofarmers.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Autofarmers",
-  description: "",
+  metadataBase: new URL(OG_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    siteName: "Autofarmers",
+    title: TITLE,
+    description: DESCRIPTION,
+    url: OG_URL,
+    type: "website",
+    images: [
+      {
+        url: OG_IMAGE_URL,
+      },
+    ],
+  },
+  twitter: {
+    title: TITLE,
+    description: DESCRIPTION,
+    card: "summary_large_image",
+    images: [
+      {
+        url: OG_IMAGE_URL,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
