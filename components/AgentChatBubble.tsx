@@ -11,6 +11,7 @@ import { Agent } from '@/data/agents';
 import MyPositionTable from './toolCards/MyPositionTable';
 import { messageSchema } from '@/data/thread';
 import { z } from 'zod';
+import MarkdownRenderer from './MarkdownRenderer';
 
 export default function AgentChatBubble({
   id,
@@ -66,25 +67,11 @@ export default function AgentChatBubble({
           </div>
         )}
         {!working && (
-          <div className="bg-muted flex w-max flex-wrap items-center justify-start gap-x-1 gap-y-0.5 rounded-lg px-3 py-2 text-sm">
-            {text.split('\n').map((line, i) => (
-              <Fragment key={`agent-messsage-${id}-line-${i}`}>
-                {line.split(' ').map((word, j) => {
-                  const key = `agent-message-${id}-line-${i}-word-${j}`;
-                  return word.startsWith('@') ? (
-                    <span
-                      key={key}
-                      className="font-semibold text-blue-500 underline"
-                    >
-                      {word}
-                    </span>
-                  ) : (
-                    <span key={key}>{word}</span>
-                  );
-                })}
-                <br />
-              </Fragment>
-            ))}
+          <div className="bg-muted rounded-lg px-3 py-2 text-sm">
+            <MarkdownRenderer
+              className="prose prose-sm prose-a:text-primary"
+              content={text}
+            />
           </div>
         )}
         {metadata && (
