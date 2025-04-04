@@ -1,16 +1,31 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowLeftRight, Check, Copy, ExternalLink } from 'lucide-react';
+import {
+  AlertCircle,
+  ArrowLeftRight,
+  Check,
+  Copy,
+  ExternalLink,
+  Loader2,
+  RefreshCw,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { tradeSchema } from '@/data/sendai';
 import { useGetTokenList } from '@/hooks/token_list';
 import { useGetTokenPrice } from '@/hooks/coingecko';
 import { zip } from 'lodash-es';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 function SwapResultContent({ info }: { info: z.infer<typeof tradeSchema> }) {
   const { data: tokens } = useGetTokenList([info.inputToken, info.outputToken]);
@@ -81,11 +96,19 @@ function SwapResultContent({ info }: { info: z.infer<typeof tradeSchema> }) {
 
 export default function SwapResult({
   info,
+  onRetry: handleRetry,
 }: {
   info: z.infer<typeof tradeSchema>;
+  onRetry: () => void;
 }) {
   const [copied, setCopied] = useState(false);
-  const { transaction: txId, status } = info;
+  const { transaction: txId } = { ...info };
+  const [retrying, setRetrying] = useState(false);
+
+  const status = useMemo(() => {
+    if (!retrying) return info.status;
+    else return 'retrying';
+  }, [info, retrying]);
 
   const handleCopyTxId = () => {
     navigator.clipboard.writeText(txId);
@@ -103,6 +126,10 @@ export default function SwapResult({
             {status === 'success' ? (
               <Badge variant="success">
                 <Check className="mr-1 h-3 w-3" /> Success
+              </Badge>
+            ) : status === 'retrying' ? (
+              <Badge variant="secondary">
+                <Check className="mr-1 h-3 w-3" /> Retry
               </Badge>
             ) : (
               <Badge variant="destructive">
@@ -138,6 +165,35 @@ export default function SwapResult({
         </div>
       </CardHeader>
       {status === 'success' && <SwapResultContent info={info} />}
+      {status !== 'success' && (
+        <>
+          <CardContent className="pt-0 pb-2">
+            <Alert variant="destructive" className="mt-2">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Transaction Failed</AlertTitle>
+              <AlertDescription>
+                The network is congested. Please try again.
+              </AlertDescription>
+            </Alert>
+          </CardContent>
+          {!retrying && (
+            <CardFooter className="flex justify-end gap-2 pt-0">
+              <Button
+                onClick={() => {
+                  setRetrying(true);
+                  handleRetry();
+                }}
+                className="flex-1"
+              >
+                <>
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  Retry Transaction
+                </>
+              </Button>
+            </CardFooter>
+          )}
+        </>
+      )}
     </Card>
   );
 }

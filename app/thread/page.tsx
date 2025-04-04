@@ -128,6 +128,9 @@ export default function Home() {
                     metadata={message.metadata}
                     onClickConfirm={handleOnClickConfirm}
                     onClickCancel={handleOnClickCancel}
+                    onRetry={() =>
+                      addMessage(`@${message.sender} Again please.`)
+                    }
                   />
                 );
               } else {

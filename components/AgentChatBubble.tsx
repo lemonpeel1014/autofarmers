@@ -21,6 +21,7 @@ export default function AgentChatBubble({
   metadata,
   onClickConfirm,
   onClickCancel,
+  onRetry,
 }: {
   id: number;
   agent: Agent;
@@ -30,6 +31,7 @@ export default function AgentChatBubble({
   metadata?: z.infer<typeof messageSchema.shape.metadata>;
   onClickConfirm: (message?: string) => void;
   onClickCancel: () => void;
+  onRetry: () => void;
 }) {
   const title = useMemo(() => {
     return `${agent.name} - ${agent.role}`;
@@ -84,7 +86,9 @@ export default function AgentChatBubble({
                 onClickCancel={onClickCancel}
               />
             )}
-            {metadata['trade'] && <SwapResult info={metadata['trade']} />}
+            {metadata['trade'] && (
+              <SwapResult info={metadata['trade']} onRetry={onRetry} />
+            )}
             {metadata['LiquidPools'] && <LiquidPoolTable metadata={metadata} />}
             {metadata['TransactionConfirm'] && (
               <TransactionConfirm
