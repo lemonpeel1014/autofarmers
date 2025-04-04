@@ -12,7 +12,9 @@ import AgentChatBubble from '@/components/AgentChatBubble';
 import { Agent, AGENT_SWAVV, AGENT_YIELDO } from '@/data/agents';
 import AgentProfile from '@/components/AgentProfile';
 import { useSearchParams } from 'next/navigation';
-import { useGetMessages } from '@/hooks/thread';
+import { useGetMessages, useAddMessage } from '@/hooks/thread';
+import { useRunAgents } from '@/hooks/runtime';
+import { last } from 'lodash-es';
 
 const AGENTS: Record<string, Agent> = {
   yieldo: AGENT_YIELDO,
@@ -27,22 +29,48 @@ export default function Home() {
     threadId,
   });
 
-  console.log('messages ::: ', messages);
+  const { mutate: runAgents } = useRunAgents({
+    threadId,
+    onSuccess: () => {
+      console.log('Agents run successfully');
+    },
+  });
+  const { mutate: addMessage } = useAddMessage({
+    threadId,
+    onMutate: (message) => {
+      setInput('');
+      messages?.push({
+        id: Date.now().valueOf(),
+        sender: 'USER',
+        content: message,
+        toolCalls: [],
+        metadata: {},
+      });
+    },
+    onSuccess: (agentNames) => {
+      runAgents(agentNames);
+    },
+  });
 
-  const onSubmit = useCallback(() => {
-    setInput('');
-  }, [setInput]);
+  const onSubmit = useCallback(
+    (message?: string) => {
+      addMessage(message || input);
+    },
+    [addMessage, input],
+  );
 
-  const handleOnClickConfirm = useCallback((message?: string) => {
-    // TODO: add confirm message
-    console.log('confirm ::: ', message);
-    setInput('');
-  }, []);
+  const handleOnClickConfirm = useCallback(
+    (message?: string) => {
+      onSubmit(message);
+    },
+    [onSubmit],
+  );
 
   const handleOnClickCancel = useCallback(() => {
-    // TODO: add cancel message
-    setInput('');
-  }, []);
+    if (!messages) return;
+
+    onSubmit(`@${last(messages)?.sender} cancel`);
+  }, [messages, onSubmit]);
 
   return (
     <div className="flex size-full gap-4">

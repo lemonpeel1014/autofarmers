@@ -4,6 +4,28 @@
 import * as jspb from "google-protobuf";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
 
+export class CheckLiveRequest extends jspb.Message {
+  clearNamesList(): void;
+  getNamesList(): Array<string>;
+  setNamesList(value: Array<string>): void;
+  addNames(value: string, index?: number): string;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CheckLiveRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: CheckLiveRequest): CheckLiveRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: CheckLiveRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CheckLiveRequest;
+  static deserializeBinaryFromReader(message: CheckLiveRequest, reader: jspb.BinaryReader): CheckLiveRequest;
+}
+
+export namespace CheckLiveRequest {
+  export type AsObject = {
+    namesList: Array<string>,
+  }
+}
+
 export class DeregisterAgentRequest extends jspb.Message {
   clearNamesList(): void;
   getNamesList(): Array<string>;

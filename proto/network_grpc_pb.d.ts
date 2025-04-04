@@ -11,6 +11,7 @@ interface IAgentNetworkService extends grpc.ServiceDefinition<grpc.UntypedServic
   getAgentRuntimeInfo: grpc.MethodDefinition<network_pb.GetAgentRuntimeInfoRequest, network_pb.GetAgentRuntimeInfoResponse>;
   registerAgent: grpc.MethodDefinition<network_pb.RegisterAgentRequest, google_protobuf_empty_pb.Empty>;
   deregisterAgent: grpc.MethodDefinition<network_pb.DeregisterAgentRequest, google_protobuf_empty_pb.Empty>;
+  checkLive: grpc.MethodDefinition<network_pb.CheckLiveRequest, google_protobuf_empty_pb.Empty>;
 }
 
 export const AgentNetworkService: IAgentNetworkService;
@@ -19,6 +20,7 @@ export interface IAgentNetworkServer extends grpc.UntypedServiceImplementation {
   getAgentRuntimeInfo: grpc.handleUnaryCall<network_pb.GetAgentRuntimeInfoRequest, network_pb.GetAgentRuntimeInfoResponse>;
   registerAgent: grpc.handleUnaryCall<network_pb.RegisterAgentRequest, google_protobuf_empty_pb.Empty>;
   deregisterAgent: grpc.handleUnaryCall<network_pb.DeregisterAgentRequest, google_protobuf_empty_pb.Empty>;
+  checkLive: grpc.handleUnaryCall<network_pb.CheckLiveRequest, google_protobuf_empty_pb.Empty>;
 }
 
 export class AgentNetworkClient extends grpc.Client {
@@ -32,4 +34,7 @@ export class AgentNetworkClient extends grpc.Client {
   deregisterAgent(argument: network_pb.DeregisterAgentRequest, callback: grpc.requestCallback<google_protobuf_empty_pb.Empty>): grpc.ClientUnaryCall;
   deregisterAgent(argument: network_pb.DeregisterAgentRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<google_protobuf_empty_pb.Empty>): grpc.ClientUnaryCall;
   deregisterAgent(argument: network_pb.DeregisterAgentRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<google_protobuf_empty_pb.Empty>): grpc.ClientUnaryCall;
+  checkLive(argument: network_pb.CheckLiveRequest, callback: grpc.requestCallback<google_protobuf_empty_pb.Empty>): grpc.ClientUnaryCall;
+  checkLive(argument: network_pb.CheckLiveRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<google_protobuf_empty_pb.Empty>): grpc.ClientUnaryCall;
+  checkLive(argument: network_pb.CheckLiveRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<google_protobuf_empty_pb.Empty>): grpc.ClientUnaryCall;
 }

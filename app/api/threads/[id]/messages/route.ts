@@ -1,15 +1,14 @@
 import {
+  AddMessageRequest,
   GetMessagesRequest,
-  GetMessagesResponse,
   Message as MessageProto,
   ThreadManagerClient,
 } from '@/proto/thread';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { NextRequest } from 'next/server';
 import { isArray, omit } from 'lodash-es';
-import { Message, messageSchema } from '@/data/thread';
+import { Message } from '@/data/thread';
 import { balanceSchema } from '@/data/sendai';
-import { z } from 'zod';
 
 export async function GET(
   _: NextRequest,
@@ -72,4 +71,41 @@ export async function GET(
   }
 
   return Response.json(messages);
+}
+
+export async function POST(request: NextRequest) {
+  const threadManagerClient = new ThreadManagerClient(
+    process.env.NETWORK_GRPC_ADDR!,
+    ChannelCredentials.createInsecure(),
+  );
+
+  const { threadId, message } = await request.json();
+  if (!threadId || !message) {
+    return Response.json(
+      { error: 'Thread ID and message are required' },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const result = await new Promise<number>((resolve, reject) => {
+      const r = new AddMessageRequest();
+      r.setContent(message);
+      r.setThreadId(threadId);
+      r.setSender('USER');
+
+      threadManagerClient.addMessage(r, (err, value) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(value!.getMessageId());
+        }
+      });
+    });
+
+    return Response.json({ messageId: result });
+  } catch (error) {
+    console.error('Error adding message:', error);
+    return Response.json({ error: 'Failed to add message' }, { status: 500 });
+  }
 }

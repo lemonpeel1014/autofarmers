@@ -16,6 +16,17 @@ function deserialize_google_protobuf_Empty(buffer_arg) {
   return google_protobuf_empty_pb.Empty.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_network_CheckLiveRequest(arg) {
+  if (!(arg instanceof network_pb.CheckLiveRequest)) {
+    throw new Error('Expected argument of type network.CheckLiveRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_network_CheckLiveRequest(buffer_arg) {
+  return network_pb.CheckLiveRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_network_DeregisterAgentRequest(arg) {
   if (!(arg instanceof network_pb.DeregisterAgentRequest)) {
     throw new Error('Expected argument of type network.DeregisterAgentRequest');
@@ -92,6 +103,17 @@ var AgentNetworkService = exports.AgentNetworkService = {
     responseType: google_protobuf_empty_pb.Empty,
     requestSerialize: serialize_network_DeregisterAgentRequest,
     requestDeserialize: deserialize_network_DeregisterAgentRequest,
+    responseSerialize: serialize_google_protobuf_Empty,
+    responseDeserialize: deserialize_google_protobuf_Empty,
+  },
+  checkLive: {
+    path: '/network.AgentNetwork/CheckLive',
+    requestStream: false,
+    responseStream: false,
+    requestType: network_pb.CheckLiveRequest,
+    responseType: google_protobuf_empty_pb.Empty,
+    requestSerialize: serialize_network_CheckLiveRequest,
+    requestDeserialize: deserialize_network_CheckLiveRequest,
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
   },

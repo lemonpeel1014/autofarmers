@@ -50,3 +50,44 @@ export function useGetMessages({ threadId }: { threadId: number }) {
     enabled: !!threadId,
   });
 }
+
+export function useAddMessage({
+  threadId,
+  onMutate,
+  onSuccess = undefined,
+}: {
+  threadId: number;
+  onMutate?: (message: string) => void;
+  onSuccess?: (agentNames: string[]) => void;
+}) {
+  return useMutation({
+    mutationKey: ['addMessage', threadId] as const,
+    mutationFn: async (message: string) => {
+      const response = await fetch(`/api/threads/${threadId}/messages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ threadId, message }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to add message');
+      }
+
+      const agentNames = message.split('\n').flatMap((line) =>
+        line
+          .split(' ')
+          .filter((word) => word.startsWith('@'))
+          .map((word) => word.slice(1)),
+      );
+      return agentNames;
+    },
+    onMutate: async (message) => {
+      onMutate?.(message);
+    },
+    onSuccess: (agentNames) => {
+      if (!agentNames || agentNames.length === 0) return;
+      onSuccess?.(agentNames);
+    },
+  });
+}

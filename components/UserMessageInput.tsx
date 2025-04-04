@@ -17,7 +17,7 @@ export default function UserMessageInput({
       onSubmit={(event) => {
         event.preventDefault();
         if (value.length === 0) return;
-        onChange('');
+        onSubmit();
       }}
       className="relative flex-1"
     >
