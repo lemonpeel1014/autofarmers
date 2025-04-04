@@ -4,6 +4,7 @@ import { ArrowLeftRight } from 'lucide-react';
 import { Input } from '../ui/input';
 import { useCallback, useMemo, useState } from 'react';
 import { Button } from '../ui/button';
+import { Card } from '../ui/card';
 
 const MAX_AMOUNT = 9999;
 export default function SwapForm({
@@ -49,15 +50,16 @@ export default function SwapForm({
   }, [convertedAmount, fromToken.name, onClickConfirm, toToken.name]);
 
   return (
-    <div className="bg-card text-card-foreground flex w-fit flex-col rounded-xl border p-4 shadow">
-      <div className="flex gap-x-6">
-        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
-          <div className="flex w-full flex-col font-medium">
-            <span className="text-sm">from</span>
-            <span className="text-center">{fromToken.name}</span>
-          </div>
+    <Card className="w-full max-w-sm p-6 shadow-lg">
+      <div className="mb-4">
+        <h2 className="text-2xl font-medium">Transaction</h2>
+      </div>
+
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+        <div>
+          <p className="mb-2 text-gray-500">From</p>
+          <p className="text-2xl font-bold">{fromToken.name}</p>
           <Input
-            className="text-center"
             disabled={!isLastMessage}
             type="number"
             min={0}
@@ -77,64 +79,59 @@ export default function SwapForm({
 
               return setAmount(parseFloat(e.target.value));
             }}
+            className="h-8 py-0 text-2xl font-bold shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
           />
-          <span className="font-medium">
+          <p className="text-muted-foreground">
             ($
             {(amount * fromToken.tokenPerUSD).toLocaleString('en-US', {
               maximumFractionDigits: 2,
             })}
             )
-          </span>
+          </p>
         </div>
-        <div className="flex flex-col justify-center">
-          <ArrowLeftRight />
+
+        <div className="flex items-center justify-center rounded-full bg-gray-100 p-3">
+          <ArrowLeftRight size={20} className="text-gray-500" />
         </div>
-        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
-          <div className="flex w-full flex-col font-medium">
-            <span className="text-sm">to</span>
-            <span className="text-center">{toToken.name}</span>
-          </div>
-          <Input readOnly className="text-center" value={convertedAmount} />
-          <span className="font-medium">
+
+        <div className="text-right">
+          <p className="mb-2 text-gray-500">To</p>
+          <p className="text-2xl font-bold">{toToken.name}</p>
+          <p className="text-2xl font-bold">{convertedAmount.toFixed(2)}</p>
+          <p className="text-muted-foreground">
             ($
             {(convertedAmount * toToken.tokenPerUSD).toLocaleString('en-US', {
               maximumFractionDigits: 2,
             })}
             )
-          </span>
+          </p>
         </div>
       </div>
 
-      <div className="my-4 flex flex-col">
-        <div className="grid grid-cols-2">
-          <div className="flex">
-            <span>Providers Fee</span>
-            <span>:</span>
-          </div>
-          <span>
+      <div className="mt-8 border-t border-gray-100 pt-6">
+        <div className="mb-2 flex items-center justify-between">
+          <div>Providers Fee</div>
+          <div className="font-medium">
             {(providersFee * convertedAmount).toLocaleString('en-US', {
               maximumFractionDigits: 3,
               minimumFractionDigits: 2,
             })}
             {feeUnit}
-          </span>
-        </div>
-        <div className="grid grid-cols-2">
-          <div className="flex">
-            <span>Network Fee</span>
-            <span>:</span>
           </div>
-          <span>
+        </div>
+        <div className="flex items-center justify-between">
+          <div>Network Fee</div>
+          <div className="font-medium">
             {networkFee.toLocaleString('en-US', {
               maximumFractionDigits: 3,
               minimumFractionDigits: 2,
             })}
             {feeUnit}
-          </span>
+          </div>
         </div>
       </div>
 
-      <div className="flex justify-center gap-x-6">
+      <div className="mt-8 flex items-center justify-center">
         <Button
           variant="ghost"
           disabled={!isLastMessage}
@@ -146,6 +143,6 @@ export default function SwapForm({
           Confirm
         </Button>
       </div>
-    </div>
+    </Card>
   );
 }
