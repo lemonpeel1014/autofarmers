@@ -70,7 +70,7 @@ export default function AgentChatBubble({
         {!working && (
           <div className="bg-muted rounded-lg px-3 py-2 text-sm">
             <MarkdownRenderer
-              className="prose prose-sm prose-a:text-primary"
+              className="prose prose-sm prose-a:text-primary break-words"
               content={text}
             />
           </div>
