@@ -8,7 +8,7 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { NextRequest } from 'next/server';
 import { isArray, omit } from 'lodash-es';
 import { Message } from '@/data/thread';
-import { balanceSchema } from '@/data/sendai';
+import { balanceSchema, tradeSchema } from '@/data/sendai';
 
 export async function GET(
   _: NextRequest,
@@ -43,26 +43,41 @@ export async function GET(
       };
 
       for (const toolCall of toolCalls) {
-        if (!toolCall.result || !toolCall.result.result) {
-          continue;
-        }
+        if (['TRADE', 'TOKEN_BALANCE_ACTION'].includes(toolCall.name)) {
+          if (!toolCall.result || !toolCall.result.result) {
+            continue;
+          }
 
-        const result = isArray(toolCall.result.result)
-          ? toolCall.result.result[0]
-          : toolCall.result.result;
+          const result = isArray(toolCall.result.result)
+            ? toolCall.result.result[0]
+            : toolCall.result.result;
 
-        if (!result || result.type !== 'text') {
-          continue;
-        }
+          if (!result || result.type !== 'text') {
+            continue;
+          }
 
-        const data = JSON.parse(result.text);
-        if (data['status'] !== 'success') {
-          console.log('toolCallName:', toolCall.name, 'error:', data);
-          continue;
-        }
+          const data = JSON.parse(result.text);
+          switch (toolCall.name) {
+            case 'TOKEN_BALANCE_ACTION':
+              {
+                if (data['status'] !== 'success') {
+                  console.log('toolCallName:', toolCall.name, 'error:', data);
+                  continue;
+                }
 
-        if (data['balance']) {
-          record.metadata['balance'] = balanceSchema.parse(data['balance']);
+                record.metadata['balance'] = balanceSchema.parse(
+                  data['balance'],
+                );
+              }
+              break;
+            case 'TRADE':
+              {
+                record.metadata['trade'] = tradeSchema.parse(data);
+              }
+              break;
+          }
+        } else {
+          console.log('toolCallName:', toolCall.name);
         }
       }
 

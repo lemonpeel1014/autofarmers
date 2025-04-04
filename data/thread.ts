@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { balanceSchema } from './sendai';
+import { balanceSchema, tradeSchema } from './sendai';
 
 export const threadSchema = z.object({
   id: z.number(),
@@ -18,6 +18,7 @@ export const messageSchema = z.object({
   ),
   metadata: z.object({
     balance: balanceSchema.optional(),
+    trade: tradeSchema.optional(),
   }),
 });
 

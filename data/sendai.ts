@@ -12,3 +12,12 @@ export const balanceSchema = z.object({
     }),
   ),
 });
+
+export const tradeSchema = z.object({
+  status: z.string(),
+  inputAmount: z.number(),
+  inputToken: z.string(),
+  outputToken: z.string(),
+  transaction: z.string(),
+  message: z.string(),
+});

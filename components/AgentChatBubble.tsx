@@ -85,7 +85,7 @@ export default function AgentChatBubble({
                 onClickCancel={onClickCancel}
               />
             )}
-            {metadata['SwapResult'] && <SwapResult metadata={metadata} />}
+            {metadata['trade'] && <SwapResult info={metadata['trade']} />}
             {metadata['LiquidPools'] && <LiquidPoolTable metadata={metadata} />}
             {metadata['TransactionConfirm'] && (
               <TransactionConfirm
