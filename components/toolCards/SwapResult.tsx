@@ -1,11 +1,16 @@
-import { ArrowLeftRight } from 'lucide-react';
-import { Badge } from '../ui/badge';
-import { tradeSchema } from '@/data/sendai';
+'use client';
+
+import { useMemo, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ArrowLeftRight, Check, Copy, ExternalLink } from 'lucide-react';
+import { toast } from 'sonner';
 import { z } from 'zod';
+import { tradeSchema } from '@/data/sendai';
 import { useGetTokenList } from '@/hooks/token_list';
 import { useGetTokenPrice } from '@/hooks/coingecko';
 import { zip } from 'lodash-es';
-import { useMemo } from 'react';
 
 function SwapResultContent({ info }: { info: z.infer<typeof tradeSchema> }) {
   const { data: tokens } = useGetTokenList([info.inputToken, info.outputToken]);
@@ -29,7 +34,7 @@ function SwapResultContent({ info }: { info: z.infer<typeof tradeSchema> }) {
       };
     });
 
-  const [outputAmount, outputAmountPerUSD] = useMemo(() => {
+  const [outputAmount, outputAmountUSD] = useMemo(() => {
     if (!fromToken || !toToken) return [0, 0];
     const outputAmountPerUSD = inputAmount * fromToken.tokenPerUSD;
     const outputAmount =
@@ -38,43 +43,39 @@ function SwapResultContent({ info }: { info: z.infer<typeof tradeSchema> }) {
   }, [fromToken, toToken, inputAmount]);
 
   return (
-    <div className="flex gap-x-6">
-      {fromToken && (
-        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
-          <div className="flex w-full flex-col font-medium">
-            <span className="text-sm">from</span>
-            <span className="text-center">{fromToken.name}</span>
-          </div>
-          <span className="font-medium">{inputAmount}</span>
-          <span className="font-medium">
-            ($
-            {(inputAmount * fromToken.tokenPerUSD).toLocaleString('en-US', {
-              maximumFractionDigits: 2,
-            })}
-            )
-          </span>
+    <CardContent className="pb-4">
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 py-4">
+        <div className="space-y-3">
+          <p className="text-muted-foreground text-sm font-medium">From</p>
+          {fromToken && (
+            <div className="space-y-1">
+              <p className="font-semibold">{fromToken.symbol}</p>
+              <p className="text-2xl font-bold">{inputAmount.toPrecision(2)}</p>
+              <p className="text-muted-foreground">
+                (${(inputAmount * fromToken.tokenPerUSD).toPrecision(2)})
+              </p>
+            </div>
+          )}
         </div>
-      )}
-      <div className="flex flex-col justify-center">
-        <ArrowLeftRight />
+
+        <div className="bg-muted flex items-center justify-center rounded-full p-2">
+          <ArrowLeftRight className="text-muted-foreground h-5 w-5" />
+        </div>
+
+        {toToken && (
+          <div className="space-y-3 text-right">
+            <p className="text-muted-foreground text-sm font-medium">To</p>
+            <div className="space-y-1">
+              <p className="font-semibold">{toToken.symbol}</p>
+              <p className="text-2xl font-bold">{outputAmount.toFixed(2)}</p>
+              <p className="text-muted-foreground">
+                (${outputAmountUSD.toFixed(2)})
+              </p>
+            </div>
+          </div>
+        )}
       </div>
-      {toToken && (
-        <div className="flex min-w-[6.25rem] flex-1 flex-col items-center gap-y-2">
-          <div className="flex w-full flex-col font-medium">
-            <span className="text-sm">to</span>
-            <span className="text-center">{toToken.name}</span>
-          </div>
-          <span className="font-medium">{outputAmount}</span>
-          <span className="font-medium">
-            ($
-            {outputAmountPerUSD.toLocaleString('en-US', {
-              maximumFractionDigits: 2,
-            })}
-            )
-          </span>
-        </div>
-      )}
-    </div>
+    </CardContent>
   );
 }
 
@@ -83,19 +84,60 @@ export default function SwapResult({
 }: {
   info: z.infer<typeof tradeSchema>;
 }) {
+  const [copied, setCopied] = useState(false);
+  const { transaction: txId, status } = info;
+
+  const handleCopyTxId = () => {
+    navigator.clipboard.writeText(txId);
+    setCopied(true);
+    toast.success('Transaction ID has been copied to your clipboard');
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="bg-card text-card-foreground flex w-fit flex-col gap-y-4 rounded-xl border p-4 shadow">
-      <div className="flex max-w-[17rem]">
-        <p className="truncate text-sm font-medium">Tx : {info.transaction}</p>
-
-        {info.status === 'success' ? (
-          <Badge>Success</Badge>
-        ) : (
-          <Badge variant="destructive">Fail</Badge>
-        )}
-      </div>
-
-      {info.status === 'success' && <SwapResultContent info={info} />}
-    </div>
+    <Card className="w-full max-w-sm border-0 shadow-lg">
+      <CardHeader className="space-y-2 pb-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CardTitle className="text-base font-medium">Transaction</CardTitle>
+            {status === 'success' ? (
+              <Badge variant="success">
+                <Check className="mr-1 h-3 w-3" /> Success
+              </Badge>
+            ) : (
+              <Badge variant="destructive">
+                <Check className="mr-1 h-3 w-3" /> Fail
+              </Badge>
+            )}
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 gap-1 text-xs"
+            onClick={() =>
+              window.open(`https://explorer.solana.com/tx/${txId}`)
+            }
+          >
+            View <ExternalLink className="h-3 w-3" />
+          </Button>
+        </div>
+        <div className="text-muted-foreground flex items-center gap-2 text-sm">
+          <span className="truncate">Tx: {txId}</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6"
+            onClick={handleCopyTxId}
+          >
+            {copied ? (
+              <Check className="h-3 w-3" />
+            ) : (
+              <Copy className="h-3 w-3" />
+            )}
+          </Button>
+        </div>
+      </CardHeader>
+      {status === 'success' && <SwapResultContent info={info} />}
+    </Card>
   );
 }

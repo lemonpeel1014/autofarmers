@@ -2,7 +2,6 @@ import { ChevronRight } from 'lucide-react';
 import { Fragment, useMemo } from 'react';
 import MyTokenTable from './toolCards/MyTokenTable';
 import SwapForm from './toolCards/SwapForm';
-import SwapResult from './toolCards/SwapResult';
 import LiquidPoolTable from './toolCards/LiquidPoolTable';
 import TransactionConfirm from './toolCards/TransactionConfirm';
 import TransactionResult from './toolCards/TransactionResult';
@@ -12,9 +11,9 @@ import MyPositionTable from './toolCards/MyPositionTable';
 import { messageSchema } from '@/data/thread';
 import { z } from 'zod';
 import MarkdownRenderer from './MarkdownRenderer';
+import SwapResult from '@/components/toolCards/SwapResult';
 
 export default function AgentChatBubble({
-  id,
   agent,
   text = '',
   working = false,
