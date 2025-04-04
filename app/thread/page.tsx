@@ -84,6 +84,7 @@ export default function Home() {
                 key={`agent-side-${i}`}
                 size="lg"
                 profileImage={agent.profileImage}
+                state={agent.state}
               />
             );
           })}
@@ -95,28 +96,16 @@ export default function Home() {
         {/* Chat Header */}
         <div className="flex flex-col gap-4 border-b border-gray-200 px-8 py-5">
           <h1 className="text-center text-2xl font-semibold">Autofarmers</h1>
-          <div className="flex w-full gap-10 overflow-x-auto">
+          <div className="flex min-h-20 w-full items-center gap-10 overflow-x-auto">
             {Object.values(AGENTS).map((agent, i) => {
               return (
-                <div
-                  key={`agent-${i}`}
-                  className="flex flex-col items-center gap-y-1"
-                >
-                  <div className="relative">
-                    <Avatar
-                      className={cn('z-10', {
-                        'grayscale-75': false,
-                      })}
-                    >
-                      <AvatarImage src={agent.profileImage} />
-                      <AvatarFallback>
-                        <Skeleton className="size-full" />
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="ring-primary absolute inset-0 z-0 animate-pulse rounded-full ring-3"></div>
-                  </div>
-                  <span className="animate-opacity-appear">{agent.name}</span>
-                </div>
+                <AgentProfile
+                  key={`agent-header-${i}`}
+                  size="md"
+                  state={agent.state}
+                  profileImage={agent.profileImage}
+                  name={agent.name}
+                />
               );
             })}
           </div>

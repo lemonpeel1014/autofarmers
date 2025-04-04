@@ -47,6 +47,7 @@
   /* Animation */
   --animate-scale-up: scale-up 0.2s ease-out forwards;
   --animate-opacity-appear: opacity-appear 0.2s ease-out forwards;
+  --animate-working: working 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
   @keyframes scale-up {
     0% {
@@ -63,6 +64,18 @@
     }
     100% {
       opacity: 1;
+    }
+  }
+
+  @keyframes working {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
     }
   }
 }
