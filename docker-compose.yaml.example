@@ -31,6 +31,8 @@ services:
       DATABASE_URL: postgres://postgres:postgres@postgres.local:5432/postgres?sslmode=disable&search_path=agentruntime
     links:
       - postgres:postgres.local
+    depends_on:
+      - postgres
 
 volumes:
   pgdata:

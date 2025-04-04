@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { GetThreadRequest, Thread, ThreadManagerClient } from '@/proto/thread';
 import { ChannelCredentials } from '@grpc/grpc-js';
-import { schemas } from '@/data';
+import { threadSchema } from '@/data/thread';
 
 export async function GET(
   _: NextRequest,
@@ -24,5 +24,5 @@ export async function GET(
     });
   });
 
-  return Response.json(schemas.thread.parse(thread.toObject()));
+  return Response.json(threadSchema.parse(thread.toObject()));
 }

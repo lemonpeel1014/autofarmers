@@ -1,5 +1,6 @@
+import { messageSchema } from '@/data/thread';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { schemas } from '@/data';
+import { z } from 'zod';
 
 export function useCreateThread({
   onSuccess = undefined,
@@ -37,9 +38,9 @@ export function useGetMessages({ threadId }: { threadId: number }) {
       if (!response.ok) {
         throw new Error('Failed to fetch thread');
       }
-      const { success, data, error } = schemas.messages.safeParse(
-        await response.json(),
-      );
+      const { success, data, error } = z
+        .array(messageSchema)
+        .safeParse(await response.json());
       if (!success) {
         throw new Error(error.message);
       }

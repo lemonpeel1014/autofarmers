@@ -8,14 +8,16 @@ import { useCallback, useState } from 'react';
 import UserMessageInput from '@/components/UserMessageInput';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { MESSAGES } from '@/data/messages';
 import AgentChatBubble from '@/components/AgentChatBubble';
-import { AGENT_SWAVV, AGENT_YIELDO } from '@/data/agents';
+import { Agent, AGENT_SWAVV, AGENT_YIELDO } from '@/data/agents';
 import AgentProfile from '@/components/AgentProfile';
 import { useSearchParams } from 'next/navigation';
 import { useGetMessages } from '@/hooks/thread';
 
-const AGENTS = [AGENT_YIELDO, AGENT_SWAVV];
+const AGENTS: Record<string, Agent> = {
+  yieldo: AGENT_YIELDO,
+  swavv: AGENT_SWAVV,
+};
 export default function Home() {
   const searchParams = useSearchParams();
   const threadId = parseInt(searchParams.get('id') ?? '0');
@@ -48,7 +50,7 @@ export default function Home() {
       <Card className="flex h-full w-[8.125rem] flex-col items-center justify-start gap-20 pt-10">
         <Image priority alt="Logo" src="/logo.png" width={46} height={45} />
         <div className="flex flex-col gap-4 overflow-x-auto">
-          {AGENTS.map((agent, i) => {
+          {Object.values(AGENTS).map((agent, i) => {
             return (
               <AgentProfile
                 key={`agent-side-${i}`}
@@ -66,7 +68,7 @@ export default function Home() {
         <div className="flex flex-col gap-4 border-b border-gray-200 px-8 py-5">
           <h1 className="text-center text-2xl font-semibold">Autofarmers</h1>
           <div className="flex w-full gap-10 overflow-x-auto">
-            {AGENTS.map((agent, i) => {
+            {Object.values(AGENTS).map((agent, i) => {
               return (
                 <div
                   key={`agent-${i}`}
@@ -93,36 +95,36 @@ export default function Home() {
         </div>
 
         {/* Chat Messages */}
-        <div className="flex grow flex-col gap-4 overflow-y-auto pr-10 pl-6">
-          {MESSAGES.map((message, i) => {
-            const isLastMessage = i === MESSAGES.length - 1;
+        {messages && (
+          <div className="flex grow flex-col gap-4 overflow-y-auto pr-10 pl-6">
+            {messages.map((message, i) => {
+              const isLastMessage = i === messages.length - 1;
 
-            if (message.type === 'agent') {
-              return (
-                <AgentChatBubble
-                  key={`chat-agent-message-${i}`}
-                  id={message.id}
-                  agent={message.agent ?? AGENT_YIELDO}
-                  text={message.text}
-                  isLastMessage={isLastMessage}
-                  toolName={message.toolName}
-                  metadata={message.metadata}
-                  onClickConfirm={handleOnClickConfirm}
-                  onClickCancel={handleOnClickCancel}
-                />
-              );
-            }
-            if (message.type === 'user') {
-              return (
-                <UserChatBubble
-                  key={`chat-user-message-${i}`}
-                  id={i}
-                  text={message.text}
-                />
-              );
-            }
-          })}
-        </div>
+              if (message.sender !== 'USER') {
+                return (
+                  <AgentChatBubble
+                    key={`chat-agent-message-${i}`}
+                    id={message.id}
+                    agent={AGENTS[message.sender.toLowerCase()]}
+                    text={message.content}
+                    isLastMessage={isLastMessage}
+                    metadata={message.metadata}
+                    onClickConfirm={handleOnClickConfirm}
+                    onClickCancel={handleOnClickCancel}
+                  />
+                );
+              } else {
+                return (
+                  <UserChatBubble
+                    key={`chat-user-message-${i}`}
+                    id={i}
+                    text={message.content}
+                  />
+                );
+              }
+            })}
+          </div>
+        )}
 
         {/* Chat Input */}
         <div className="px-2 pb-2">

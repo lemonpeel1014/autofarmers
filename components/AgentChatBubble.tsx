@@ -9,6 +9,8 @@ import TransactionResult from './toolCards/TransactionResult';
 import AgentProfile from './AgentProfile';
 import { Agent } from '@/data/agents';
 import MyPositionTable from './toolCards/MyPositionTable';
+import { messageSchema } from '@/data/thread';
+import { z } from 'zod';
 
 export default function AgentChatBubble({
   id,
@@ -16,7 +18,6 @@ export default function AgentChatBubble({
   text = '',
   working = false,
   isLastMessage = false,
-  toolName,
   metadata,
   onClickConfirm,
   onClickCancel,
@@ -26,12 +27,7 @@ export default function AgentChatBubble({
   text?: string;
   isLastMessage?: boolean;
   working?: boolean;
-  toolName?: string;
-  metadata?:
-    | {
-        [key: string]: unknown;
-      }
-    | undefined;
+  metadata?: z.infer<typeof messageSchema.shape.metadata>;
   onClickConfirm: (message?: string) => void;
   onClickCancel: () => void;
 }) {
@@ -91,12 +87,10 @@ export default function AgentChatBubble({
             ))}
           </div>
         )}
-        {toolName && (
+        {metadata && (
           <>
-            {metadata && toolName === 'TokenList' && (
-              <MyTokenTable metadata={metadata} />
-            )}
-            {metadata && toolName === 'SwapForm' && (
+            {metadata['balance'] && <MyTokenTable balance={metadata.balance} />}
+            {metadata['SwapForm'] && (
               <SwapForm
                 isLastMessage={isLastMessage}
                 metadata={metadata}
@@ -104,13 +98,9 @@ export default function AgentChatBubble({
                 onClickCancel={onClickCancel}
               />
             )}
-            {metadata && toolName === 'SwapResult' && (
-              <SwapResult metadata={metadata} />
-            )}
-            {metadata && toolName === 'LiquidPools' && (
-              <LiquidPoolTable metadata={metadata} />
-            )}
-            {metadata && toolName === 'TransactionConfirm' && (
+            {metadata['SwapResult'] && <SwapResult metadata={metadata} />}
+            {metadata['LiquidPools'] && <LiquidPoolTable metadata={metadata} />}
+            {metadata['TransactionConfirm'] && (
               <TransactionConfirm
                 isLastMessage={isLastMessage}
                 metadata={metadata}
@@ -118,10 +108,10 @@ export default function AgentChatBubble({
                 onClickCancel={onClickCancel}
               />
             )}
-            {metadata && toolName === 'TransactionResult' && (
+            {metadata['TransactionResult'] && (
               <TransactionResult metadata={metadata} />
             )}
-            {metadata && toolName === 'LiquidPoolPositions' && (
+            {metadata['LiquidPoolPositions'] && (
               <MyPositionTable metadata={metadata} />
             )}
           </>
