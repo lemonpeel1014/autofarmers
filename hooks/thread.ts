@@ -23,3 +23,29 @@ export function useCreateThread({
     onSuccess,
   });
 }
+
+export function useGetMessages({ threadId }: { threadId: number }) {
+  return useQuery({
+    queryKey: ['thread', { threadId }] as const,
+    queryFn: async ({ queryKey: [_, { threadId }] }) => {
+      const response = await fetch(`/api/threads/${threadId}/messages`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch thread');
+      }
+      const { success, data, error } = schemas.messages.safeParse(
+        await response.json(),
+      );
+      if (!success) {
+        throw new Error(error.message);
+      }
+
+      return data;
+    },
+    enabled: !!threadId,
+  });
+}

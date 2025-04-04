@@ -13,6 +13,7 @@ import AgentChatBubble from '@/components/AgentChatBubble';
 import { AGENT_SWAVV, AGENT_YIELDO } from '@/data/agents';
 import AgentProfile from '@/components/AgentProfile';
 import { useSearchParams } from 'next/navigation';
+import { useGetMessages } from '@/hooks/thread';
 
 const AGENTS = [AGENT_YIELDO, AGENT_SWAVV];
 export default function Home() {
@@ -20,7 +21,11 @@ export default function Home() {
   const threadId = parseInt(searchParams.get('id') ?? '0');
   const [input, setInput] = useState('');
 
-  console.log('threadId ::: ', threadId);
+  const { data: messages } = useGetMessages({
+    threadId,
+  });
+
+  console.log('messages ::: ', messages);
 
   const onSubmit = useCallback(() => {
     setInput('');
