@@ -22,10 +22,6 @@ export default function SwapForm({
   onClickConfirm: (message: string) => void;
   onClickCancel: () => void;
 }) {
-  const feeUnit = metadata?.feeUnit as string;
-  const providersFee = metadata?.providersFee as number;
-  const networkFee = metadata?.networkFee as number;
-
   const fromToken = metadata?.fromToken as {
     name: string;
     amount?: number;
@@ -108,38 +104,45 @@ export default function SwapForm({
         </div>
       </div>
 
-      <div className="mt-8 border-t border-gray-100 pt-6">
-        <div className="mb-2 flex items-center justify-between">
-          <div>Providers Fee</div>
-          <div className="font-medium">
-            {(providersFee * convertedAmount).toLocaleString('en-US', {
-              maximumFractionDigits: 3,
-              minimumFractionDigits: 2,
-            })}
-            {feeUnit}
+      {/*
+        <div className="mt-8 border-t border-gray-100 pt-6">
+          <div className="mb-2 flex items-center justify-between">
+            <div>Providers Fee</div>
+            <div className="font-medium">
+              {(providersFee * convertedAmount).toLocaleString('en-US', {
+                maximumFractionDigits: 3,
+                minimumFractionDigits: 2,
+              })}
+              {feeUnit}
+            </div>
           </div>
-        </div>
-        <div className="flex items-center justify-between">
-          <div>Network Fee</div>
-          <div className="font-medium">
-            {networkFee.toLocaleString('en-US', {
-              maximumFractionDigits: 3,
-              minimumFractionDigits: 2,
-            })}
-            {feeUnit}
+          <div className="flex items-center justify-between">
+            <div>Network Fee</div>
+            <div className="font-medium">
+              {networkFee.toLocaleString('en-US', {
+                maximumFractionDigits: 3,
+                minimumFractionDigits: 2,
+              })}
+              {feeUnit}
+            </div>
           </div>
-        </div>
-      </div>
+        </div> 
+      */}
 
-      <div className="mt-8 flex items-center justify-center">
+      <div className="mt-8 flex gap-4">
         <Button
+          className="flex-1"
           variant="ghost"
           disabled={!isLastMessage}
           onClick={onClickCancel}
         >
           Cancel
         </Button>
-        <Button disabled={!isLastMessage} onClick={handleOnClickConfirm}>
+        <Button
+          className="flex-1"
+          disabled={!isLastMessage}
+          onClick={handleOnClickConfirm}
+        >
           Confirm
         </Button>
       </div>

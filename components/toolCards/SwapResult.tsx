@@ -16,7 +16,6 @@ import {
   Check,
   Copy,
   ExternalLink,
-  Loader2,
   RefreshCw,
 } from 'lucide-react';
 import { toast } from 'sonner';
