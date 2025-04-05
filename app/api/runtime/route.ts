@@ -1,39 +1,73 @@
+import { runRequestSchema } from '@/data/api';
+import {
+  AgentNetworkClient,
+  GetAgentRuntimeInfoRequest,
+  GetAgentRuntimeInfoResponse,
+} from '@/proto/network';
 import { AgentRuntimeClient } from '@/proto/runtime';
 import { RunRequest } from '@/proto/runtime_pb';
 import { ChannelCredentials } from '@grpc/grpc-js';
+import { intersectionWith } from 'lodash-es';
 import { NextRequest } from 'next/server';
+import { intersectIgnoreCase } from '@/utils/intersect';
 
 export async function POST(request: NextRequest) {
-  const agentRuntimeClient = new AgentRuntimeClient(
-    '127.0.0.1:10080',
+  const { threadId, agentNames } = runRequestSchema.parse(await request.json());
+  const networkClient = new AgentNetworkClient(
+    process.env.NETWORK_GRPC_ADDR!,
     ChannelCredentials.createInsecure(),
   );
 
-  const { threadId, agentNames } = await request.json();
-  if (!threadId || !agentNames || agentNames.length === 0) {
-    return Response.json(
-      { error: 'Thread ID and agent names are required' },
-      { status: 400 },
-    );
-  }
-
-  console.log('Thread ID:', threadId);
-  console.log('Agent names:', agentNames);
-
-  try {
-    await new Promise<void>((resolve, reject) => {
-      const r = new RunRequest();
-      r.setThreadId(threadId);
-      r.setAgentNamesList(agentNames);
-
-      agentRuntimeClient.run(r, (err) => {
+  const runtimeInfo = await new Promise<GetAgentRuntimeInfoResponse>(
+    (resolve, reject) => {
+      const req = new GetAgentRuntimeInfoRequest();
+      req.setNamesList(agentNames);
+      networkClient.getAgentRuntimeInfo(req, (err, value) => {
         if (err) {
           reject(err);
         } else {
-          resolve();
+          resolve(value!);
         }
       });
-    });
+    },
+  ).then((resp) => {
+    const r = resp.toObject();
+    return r.agentRuntimeInfoList;
+  });
+
+  console.log('Thread ID:', threadId);
+  console.log('Agent names:', agentNames);
+  console.log('Runtime info:', runtimeInfo);
+
+  try {
+    await Promise.all(
+      runtimeInfo.map(async ({ addr, agentNamesList: names }) => {
+        const agentRuntimeClient = new AgentRuntimeClient(
+          addr,
+          ChannelCredentials.createInsecure(),
+        );
+        const targets = intersectIgnoreCase(agentNames, names);
+        if (targets.length == 0) {
+          return;
+        }
+
+        await new Promise<void>((resolve, reject) => {
+          const r = new RunRequest();
+          r.setThreadId(threadId);
+          r.setAgentNamesList(targets);
+
+          console.log('run request:', r.toObject());
+          agentRuntimeClient.run(r, (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+        });
+        agentRuntimeClient.close();
+      }),
+    );
 
     return Response.json({ message: 'Agents running successfully' });
   } catch (error) {
