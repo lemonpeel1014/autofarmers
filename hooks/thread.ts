@@ -27,6 +27,8 @@ export function useCreateThread({
 
 export function useGetMessages({ threadId }: { threadId: number }) {
   return useQuery({
+    refetchInterval: 1000,
+    refetchIntervalInBackground: true,
     queryKey: ['thread', { threadId }] as const,
     queryFn: async ({ queryKey: [_, { threadId }] }) => {
       const response = await fetch(`/api/threads/${threadId}/messages`, {
