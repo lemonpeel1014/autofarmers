@@ -1,4 +1,5 @@
 import { Button } from '../ui/button';
+import { Card } from '../ui/card';
 
 export default function TransactionConfirm({
   isLastMessage,
@@ -19,29 +20,43 @@ export default function TransactionConfirm({
   const amount = metadata?.amount as number;
 
   return (
-    <div className="bg-card text-card-foreground flex w-fit flex-col rounded-xl border p-4 shadow">
-      <div className="mb-4 flex flex-col font-medium">
-        <span>Pool : {poolName}</span>
-        <span>
-          Amount :&nbsp;
-          {amount.toLocaleString('en-US', {
-            maximumFractionDigits: 2,
-          })}
-        </span>
+    <Card className="text-card-foreground w-full max-w-sm rounded-xl p-6 shadow-lg">
+      <div className="mb-6">
+        <h2 className="text-2xl font-medium">Liquidity Providing</h2>
       </div>
 
-      <div className="flex justify-center gap-x-6">
+      <div className="space-y-6">
+        <div>
+          <div className="mb-2">Pool</div>
+          <div className="text-2xl font-bold">{poolName}</div>
+        </div>
+        <div>
+          <p className="mb-2">Amount</p>
+          <p className="text-2xl font-bold">
+            {amount.toLocaleString('en-US', {
+              maximumFractionDigits: 2,
+            })}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-8 flex gap-4">
         <Button
-          variant="ghost"
           disabled={!isLastMessage}
           onClick={onClickCancel}
+          className="flex-1"
+          variant="ghost"
         >
           Cancel
         </Button>
-        <Button disabled={!isLastMessage} onClick={onClickConfirm}>
-          Sign & Stake
+        <Button
+          className="flex-1"
+          disabled={!isLastMessage}
+          onClick={onClickConfirm}
+        >
+          Confirm
         </Button>
       </div>
-    </div>
+    </Card>
   );
 }
