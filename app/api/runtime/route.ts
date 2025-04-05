@@ -7,7 +7,6 @@ import {
 import { AgentRuntimeClient } from '@/proto/runtime';
 import { RunRequest } from '@/proto/runtime_pb';
 import { ChannelCredentials } from '@grpc/grpc-js';
-import { intersectionWith } from 'lodash-es';
 import { NextRequest } from 'next/server';
 import { intersectIgnoreCase } from '@/utils/intersect';
 
