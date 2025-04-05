@@ -19,6 +19,11 @@ export const messageSchema = z.object({
   metadata: z.object({
     balance: balanceSchema.optional(),
     trade: tradeSchema.optional(),
+    SwapForm: z.any().optional(),
+    LiquidPools: z.any().optional(),
+    TransactionConfirm: z.any().optional(),
+    TransactionResult: z.any().optional(),
+    LiquidPoolPositions: z.any().optional(),
   }),
 });
 

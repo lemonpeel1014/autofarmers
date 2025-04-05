@@ -1,13 +1,10 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card } from '@/components/ui/card';
 import UserChatBubble from '@/components/UserChatBubble';
 import Image from 'next/image';
 import { useCallback, useState } from 'react';
 import UserMessageInput from '@/components/UserMessageInput';
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
 import AgentChatBubble from '@/components/AgentChatBubble';
 import { Agent, AGENT_SWAVV, AGENT_YIELDO } from '@/data/agents';
 import AgentProfile from '@/components/AgentProfile';

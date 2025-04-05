@@ -5,8 +5,9 @@ import { threadSchema } from '@/data/thread';
 
 export async function GET(
   _: NextRequest,
-  { params: { id: threadId } }: { params: { id: number } },
+  { params }: { params: Promise<{ id: number }> },
 ) {
+  const { id: threadId } = await params;
   const threadManagerClient = new ThreadManagerClient(
     process.env.NETWORK_GRPC_ADDR!,
     ChannelCredentials.createInsecure(),

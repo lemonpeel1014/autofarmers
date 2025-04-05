@@ -99,7 +99,7 @@ export default function AgentChatBubble({
               />
             )}
             {metadata['TransactionResult'] && (
-              <TransactionResult metadata={metadata} />
+              <TransactionResult metadata={metadata} onRetry={onRetry} />
             )}
             {metadata['LiquidPoolPositions'] && (
               <MyPositionTable metadata={metadata} />
