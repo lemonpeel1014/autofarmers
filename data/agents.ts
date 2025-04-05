@@ -8,13 +8,13 @@ export type Agent = {
 export const AGENT_YIELDO: Agent = {
   name: 'Yieldo',
   role: 'Yield',
-  profileImage: '/images/agents/yieldo.png',
+  profileImage: '/agents/yieldo.png',
   state: 'working',
 };
 
 export const AGENT_SWAVV: Agent = {
   name: 'Swavv',
   role: 'Swap',
-  profileImage: '/images/agents/swavv.png',
+  profileImage: '/agents/swavv.png',
   state: 'waiting',
 };
